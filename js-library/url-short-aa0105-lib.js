@@ -1,3 +1,36 @@
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const themeText = themeToggle.querySelector('span');
+    
+    // Check for saved theme or prefer-color-scheme
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const currentTheme = localStorage.getItem('theme') || 
+                        (prefersDarkScheme.matches ? 'dark' : 'light');
+    
+    // Set initial theme
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+    
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
+    
+    function updateThemeIcon(theme) {
+      if (theme === 'dark') {
+        themeIcon.className = 'fas fa-moon';
+        themeText.textContent = 'Dark Mode';
+      } else {
+        themeIcon.className = 'fas fa-sun';
+        themeText.textContent = 'Light Mode';
+      }
+    }
+    
     // Set active expiry option
     document.querySelectorAll('.expiry-option').forEach(option => {
       option.addEventListener('click', function() {
@@ -7,39 +40,64 @@
       });
     });
 
-    // Worker API URL - Update this to your Worker URL
+    // Worker API URL
     const WORKER_API = 'https://url.aarif753alam.workers.dev';
 
     async function createShortURL() {
       const longURL = document.getElementById('longURL').value.trim();
       const customKey = document.getElementById('customKey').value.trim();
       const expiryDays = document.getElementById('expiryDays').value;
-
+      const createBtn = document.getElementById('createBtn');
+      
       // Clear previous results and errors
       document.getElementById('error').style.display = 'none';
       document.getElementById('resultContainer').style.display = 'none';
-      document.getElementById('qrContainer').style.display = 'none';
-      document.getElementById('loading').style.display = 'block';
+      
+      // Show enhanced loading animation
+      document.getElementById('loadingContainer').style.display = 'block';
+      document.getElementById('loadingText').textContent = 'Processing your URL...';
+      document.getElementById('loadingSubtext').textContent = 'This may take a few seconds';
+      
+      // Disable create button
+      createBtn.disabled = true;
+      createBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
       // Validation
       if (!longURL) {
         showError('Please enter a destination URL.');
+        resetButton();
         return;
       }
 
       // Basic URL validation
       try {
-        // Try to create URL object, will fail if invalid
         const url = new URL(longURL);
         if (!url.protocol || !url.hostname) {
           throw new Error('Invalid URL');
         }
       } catch (e) {
         showError('Please enter a valid URL (include http:// or https://)');
+        resetButton();
         return;
       }
 
       try {
+        // Show processing steps with delay for better UX
+        let step = 1;
+        const steps = [
+          'Validating URL...',
+          'Checking availability...',
+          'Generating short link...',
+          'Finalizing...'
+        ];
+        
+        const interval = setInterval(() => {
+          if (step < steps.length) {
+            document.getElementById('loadingText').textContent = steps[step];
+            step++;
+          }
+        }, 800);
+
         const response = await fetch(WORKER_API, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -50,9 +108,14 @@
           })
         });
 
+        clearInterval(interval);
+        
         const data = await response.json();
         
-        document.getElementById('loading').style.display = 'none';
+        // Hide loading container
+        document.getElementById('loadingContainer').style.display = 'none';
+        createBtn.disabled = false;
+        createBtn.innerHTML = '<i class="fas fa-bolt"></i> Create Short URL';
 
         if (!response.ok || !data.success) {
           showError(data.error || 'Failed to create short URL. Please try again.');
@@ -63,10 +126,19 @@
         displayResult(data);
         
       } catch (error) {
-        document.getElementById('loading').style.display = 'none';
+        document.getElementById('loadingContainer').style.display = 'none';
+        createBtn.disabled = false;
+        createBtn.innerHTML = '<i class="fas fa-bolt"></i> Create Short URL';
         console.error('Error:', error);
         showError('Network error. Please check your connection and try again.');
       }
+    }
+    
+    function resetButton() {
+      const createBtn = document.getElementById('createBtn');
+      document.getElementById('loadingContainer').style.display = 'none';
+      createBtn.disabled = false;
+      createBtn.innerHTML = '<i class="fas fa-bolt"></i> Create Short URL';
     }
 
     function displayResult(data) {
@@ -108,7 +180,6 @@
       const errorElement = document.getElementById('error');
       errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
       errorElement.style.display = 'block';
-      document.getElementById('loading').style.display = 'none';
       
       // Hide error after 5 seconds
       setTimeout(() => {
@@ -121,12 +192,17 @@
       document.getElementById('customKey').value = '';
       document.getElementById('error').style.display = 'none';
       document.getElementById('resultContainer').style.display = 'none';
-      document.getElementById('qrContainer').style.display = 'none';
+      document.getElementById('loadingContainer').style.display = 'none';
       
       // Reset expiry to default
       document.querySelectorAll('.expiry-option').forEach(opt => opt.classList.remove('active'));
       document.querySelector('.expiry-option[data-days="30"]').classList.add('active');
       document.getElementById('expiryDays').value = '30';
+      
+      // Reset button
+      const createBtn = document.getElementById('createBtn');
+      createBtn.disabled = false;
+      createBtn.innerHTML = '<i class="fas fa-bolt"></i> Create Short URL';
     }
 
     function copyShortURL() {
@@ -148,43 +224,6 @@
         .catch(err => {
           showError('Failed to copy to clipboard');
         });
-    }
-
-    function generateQRCode() {
-      if (!window.shortURLData) return;
-      
-      const qrContainer = document.getElementById('qrContainer');
-      const qrcodeElement = document.getElementById('qrcode');
-      
-      // Clear previous QR code
-      qrcodeElement.innerHTML = '';
-      
-      // Generate new QR code
-      QRCode.toCanvas(qrcodeElement, window.shortURLData.shortURL, {
-        width: 200,
-        height: 200,
-        color: {
-          dark: '#6a11cb',
-          light: '#ffffff'
-        }
-      }, function(error) {
-        if (error) {
-          showError('Failed to generate QR code');
-        } else {
-          qrContainer.style.display = 'block';
-          qrContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      });
-    }
-
-    function downloadQRCode() {
-      const canvas = document.querySelector('#qrcode canvas');
-      if (!canvas) return;
-      
-      const link = document.createElement('a');
-      link.download = `qr-${window.shortURLData.key}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
     }
 
     async function viewAnalytics() {
@@ -223,5 +262,8 @@
       this.value = this.value.toLowerCase().replace(/[^a-z0-9-_]/g, '-');
     });
 
-    // Initialize with example URL (optional)
-    // document.getElementById('longURL').value = 'https://example.com';
+    // Initialize theme on load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Optional: Add example URL placeholder
+      // document.getElementById('longURL').placeholder = 'https://example.com/very-long-url-that-needs-shortening';
+    });
