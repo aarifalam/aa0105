@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Free Greeting Card Maker – Create Digital Cards Online | EntireAI</title>
+  <meta name="description" content="Create beautiful digital greeting cards online for birthdays and special occasions. Add personal messages, photos, and social links. Free greeting card maker with instant download.">
+  <meta name="keywords" content="greeting card maker, online greeting cards, birthday card maker, digital greeting cards, custom birthday cards, personalized ecards, free card generator">
+  <meta name="author" content="EntireAI">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://entireai.net/greeting-card/">
+
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="EntireAI Tools">
+  <meta property="og:url" content="https://entireai.net/greeting-card/">
+  <meta property="og:title" content="Free Greeting Card Maker – Create Digital Cards Online">
+  <meta property="og:description" content="Design custom greeting cards online with photos and personal messages. Free, fast, and no signup required.">
+  <meta property="og:image" content="https://entireai.net/greeting-card/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="EntireAI Greeting Card Maker Interface">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Greeting Card Maker – EntireAI">
+  <meta name="twitter:description" content="Create personalized digital greeting cards instantly. Free greeting card maker by EntireAI.">
+  <meta name="twitter:image" content="https://entireai.net/greeting-card/twitter-card.jpg">
+  <meta name="twitter:site" content="@entireai">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/apple-touch-icon.png">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Greeting Card Maker",
+    "url": "https://entireai.net/greeting-card/",
+    "description": "Free online greeting card maker to create personalized digital birthday and celebration cards.",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "EntireAI",
+      "url": "https://entireai.net"
+    },
+    "featureList": [
+      "Custom birthday cards",
+      "Personal messages and photos",
+      "Instant download",
+      "No registration required",
+      "Shareable digital cards"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://entireai.net"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Greeting Card Maker",
+        "item": "https://entireai.net/greeting-card/"
+      }
+    ]
+  }
+  </script>
+
+<!-- CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="card.css">
+<style>
+    .magic-btn {
+        position: relative;
+        display: block;
+        background: linear-gradient(45deg, #FF512F, #DD2476, #FF512F);
+        background-size: 200% 200%;
+        color: white;
+        border: none;
+        padding: 20px 40px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        width: 100%;
+        max-width: 320px;
+        text-decoration: none;
+        text-align: center;
+        margin: 50px auto;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        box-shadow: 0 10px 25px rgba(221, 36, 118, 0.4);
+        animation: gradientMove 4s ease infinite;
+    }
+    
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .magic-btn::before {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        background: linear-gradient(45deg, #FF512F, #DD2476, #3a7bd5, #00d2ff);
+        background-size: 400% 400%;
+        border-radius: 50px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.5s;
+        animation: gradientMove 3s ease infinite;
+    }
+    
+    .magic-btn:hover::before {
+        opacity: 1;
+    }
+    
+    .magic-btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 5px 15px rgba(221, 36, 118, 0.6);
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .magic-btn {
+        animation: gradientMove 4s ease infinite, float 3s ease-in-out infinite;
+    }
+    
+    /* Shine effect */
+    .magic-btn::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -60%;
+        width: 20%;
+        height: 200%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(30deg);
+        transition: all 0.8s;
+    }
+    
+    .magic-btn:hover::after {
+        left: 130%;
+    }
+    
+    /* Icon animation */
+    .magic-btn span {
+        display: inline-block;
+        margin-right: 8px;
+        transition: transform 0.3s ease;
+        font-size: 20px;
+    }
+    
+    .magic-btn:hover span {
+        transform: translateX(5px) scale(1.2);
+    }
+    
+    /* Pulse animation on hover */
+    @keyframes pulse {
+        0% { box-shadow: 0 10px 25px rgba(221, 36, 118, 0.4); }
+        50% { box-shadow: 0 10px 30px rgba(221, 36, 118, 0.7); }
+        100% { box-shadow: 0 10px 25px rgba(221, 36, 118, 0.4); }
+    }
+    
+    .magic-btn:hover {
+        animation: gradientMove 3s ease infinite, float 3s ease-in-out infinite, pulse 1.5s ease infinite;
+    }
+    
+    /* Responsive */
+    @media (max-width: 480px) {
+        .magic-btn {
+            padding: 18px 32px;
+            font-size: 17px;
+            max-width: 280px;
+        }
+    }
+    
+    @media (max-width: 360px) {
+        .magic-btn {
+            padding: 16px 28px;
+            font-size: 16px;
+            max-width: 250px;
+        }
+    }
+    
+    /* Disable hover effects on touch devices */
+    @media (hover: none) {
+        .magic-btn:hover::before {
+            opacity: 0;
+        }
+        
+        .magic-btn:hover::after {
+            left: -60%;
+        }
+        
+        .magic-btn:hover span {
+            transform: none;
+        }
+        
+        .magic-btn:hover {
+            animation: gradientMove 4s ease infinite, float 3s ease-in-out infinite;
+        }
+    }
+</style>
+</head>
+<body>
+
+<main>
+  <div class="card-container">
+    <div class="flip-card" id="flipCard">
+      <div class="flip-card-inner" id="cardContainer">
+        <div class="flip-card-front" id="frontMessage">
+          🎉 HAPPY BIRTHDAY! 🎉
+        </div>
+        <div class="flip-card-back" id="backMessage">
+          <img alt="Birthday Person" class="profile-image" id="profileImage" src="https://i.imgur.com/JqYeYn7.jpg" onerror="this.src='https://i.imgur.com/JqYeYn7.jpg'">
+          <div class="birthday-text" id="birthdayText">To My Amazing Friend!</div>
+          <div id="backText">
+            Wishing you a day filled with happiness and a year filled with joy! 
+            May all your dreams come true on this special day.
+          </div>
+          <div class="social-icons" id="socialIcons">
+            <!-- Social icons will be generated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="editor-container">
+    <div class="editor">
+      <h3><i class="fas fa-edit"></i> Customize Birthday Card</h3>
+      
+      <div class="form-group">
+        <label for="frontInput"><i class="fas fa-font"></i> Front Message:</label>
+        <input id="frontInput" placeholder="Enter front message" type="text" value="🎉 HAPPY BIRTHDAY! 🎉">
+        <div class="error-message" id="frontError"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="imageUrl"><i class="fas fa-image"></i> Profile Image URL:</label>
+        <input id="imageUrl" placeholder="Paste image URL here" type="text" value="https://i.imgur.com/JqYeYn7.jpg">
+        <div class="error-message" id="imageError"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="backTitle"><i class="fas fa-heading"></i> Back Title:</label>
+        <input id="backTitle" placeholder="Enter back title" type="text" value="To My Amazing Friend!">
+        <div class="error-message" id="titleError"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="backInput"><i class="fas fa-comment"></i> Back Message:</label>
+        <textarea id="backInput" placeholder="Enter your birthday message" rows="4">Wishing you a day filled with happiness and a year filled with joy! 
+May all your dreams come true on this special day.</textarea>
+        <div class="error-message" id="messageError"></div>
+      </div>
+      
+      <div class="form-group">
+        <label><i class="fas fa-share-alt"></i> Social Media Links:</label>
+        <div class="social-inputs">
+          <input id="instagram" placeholder="Instagram URL" type="url">
+          <input id="facebook" placeholder="Facebook URL" type="url">
+          <input id="twitter" placeholder="Twitter URL" type="url">
+          <input id="youtube" placeholder="YouTube URL" type="url">
+        </div>
+        <div class="error-message" id="socialError"></div>
+      </div>
+      
+      <div class="button-group">
+        <button class="primary" onclick="updateCard()">
+          <i class="fas fa-sync-alt"></i> Update Card
+        </button>
+        <button class="secondary" onclick="downloadCard()">
+          <i class="fas fa-download"></i> Download Card
+        </button>
+        <button class="accent" onclick="addConfetti()">
+          <i class="fas fa-sparkles"></i> Add Confetti!
+        </button>
+      </div>
+    </div>
+
+    <div class="image-upload-section">
+      <button class="upload-btn" onclick="uploadImage()">
+        <i class="fas fa-cloud-upload-alt"></i> Upload image
+      </button>
+      <div class="upload-progress" id="uploadProgress" style="display: none;">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span id="progressText">0%</span>
+      </div>
+    </div>
+
+    <div class="emoji-section">
+      <h4><i class="fas fa-smile"></i> Select Emojis for Random Display (on flip)</h4>
+      <div class="emoji-selector" id="emojiSelector">
+        <div class="emoji-option" data-emoji="🎉">🎉</div>
+        <div class="emoji-option" data-emoji="🎂">🎂</div>
+        <div class="emoji-option" data-emoji="🎈">🎈</div>
+        <div class="emoji-option" data-emoji="🎁">🎁</div>
+        <div class="emoji-option" data-emoji="✨">✨</div>
+        <div class="emoji-option" data-emoji="🥳">🥳</div>
+        <div class="emoji-option" data-emoji="🎊">🎊</div>
+        <div class="emoji-option" data-emoji="❤️">❤️</div>
+        <div class="emoji-option" data-emoji="⭐">⭐</div>
+        <div class="emoji-option" data-emoji="🎵">🎵</div>
+      </div>
+      <div class="selected-emojis" id="selectedEmojis">
+        <p>Selected emojis: 🎉 🎂 🎈 🎁 ✨</p>
+      </div>
+    </div>
+
+    <div class="share-section">
+      <button class="share-btn" onclick="generateShareableURL()">
+        <i class="fas fa-share-alt"></i> Generate Shareable URL
+      </button>
+      <div class="generated-url" id="generatedUrlContainer" style="display: none;">
+        <p><i class="fas fa-link"></i> Share this link:</p>
+        <div class="url-display">
+          <input type="text" id="shareableUrl" readonly>
+          <button class="copy-btn" onclick="copyShareUrl()"><i class="fas fa-copy"></i> Copy</button>
+          <button class="open-btn" onclick="testShareUrl()"><i class="fas fa-external-link-alt"></i> Open</button>
+        </div>
+        <p class="url-note">Anyone with this link can view and download your card</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<a href="url-shortener.html" class="magic-btn">
+    <span>🚀</span>
+    Url shortner
+</a>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="/index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="/footer/About.html"><i class="fas fa-info-circle"></i> About</a>
+      <a href="/footer/contact-us/contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="/footer/privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy</a>
+      <a href="/footer/Terms.html"><i class="fas fa-file-contract"></i> Terms</a>
+    </div>
+    <div class="footer-text">
+      <p>© 2024 GreetingCard Maker. All rights reserved.</p>
+      <p>Made with <i class="fas fa-heart" style="color: #e91e63;"></i> by ENTIREAI</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+    // Add click effects
+    const button = document.querySelector('.magic-btn');
+    
+    button.addEventListener('click', function(e) {
+        // Create ripple effect
+        let ripple = document.createElement('span');
+        let rect = this.getBoundingClientRect();
+        let size = Math.max(rect.width, rect.height);
+        let x = e.clientX - rect.left - size / 2;
+        let y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            width: ${size}px;
+            height: ${size}px;
+            top: ${y}px;
+            left: ${x}px;
+            pointer-events: none;
+            z-index: 1;
+        `;
+        
+        this.appendChild(ripple);
+        
+        // Add CSS for ripple if not already there
+        if (!document.querySelector('#rippleEffect')) {
+            let style = document.createElement('style');
+            style.id = 'rippleEffect';
+            style.textContent = `
+                @keyframes rippleEffect {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Remove ripple after animation
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+        
+        // Add vibration on mobile
+        if (navigator.vibrate) {
+            navigator.vibrate(30);
+        }
+        
+        // Add loading state
+        const originalText = this.innerHTML;
+        this.innerHTML = '<span>⏳</span> Opening...';
+        this.style.pointerEvents = 'none';
+        
+        // Reset after 1.5 seconds
+        setTimeout(() => {
+            this.innerHTML = originalText;
+            this.style.pointerEvents = 'auto';
+        }, 1500);
+    });
+</script>
+
+<script src="https://aa0105-lib.pages.dev/card-0105/card.js"></script>
+<script src="https://aa0105-lib.pages.dev/card-0105/card01.js"></script>
+
+</body>
+</html>

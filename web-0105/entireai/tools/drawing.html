@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+
+<title>Online Drawing Tool Free – Paint, Sketch & Create | EntireAI</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Draw, paint, and sketch online for free with EntireAI. Use our simple and powerful drawing tool to create digital art instantly, no signup required.">
+
+<meta name="keywords" content="online drawing tool, free paint app, sketch online, draw online, digital drawing, entireai drawing tool, online art tool">
+
+<meta name="author" content="Isaac Ojo">
+<meta name="generator" content="Developed by AarifAlam0105">
+
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<link rel="canonical" href="https://entireai.net/tools/drawing">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EntireAI">
+<meta property="og:url" content="https://entireai.net/tools/drawing">
+<meta property="og:title" content="Online Drawing Tool Free | EntireAI">
+<meta property="og:description" content="Create sketches, digital art, and paintings online for free with EntireAI’s drawing tool. Easy, fast, and secure.">
+<meta property="og:image" content="/images/drawing-tool.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EntireAI Online Drawing Tool Interface">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Online Drawing Tool Free | EntireAI">
+<meta name="twitter:description" content="Draw, paint, and create digital art online for free. Fast, secure, and works on all devices.">
+<meta name="twitter:image" content="/images/drawing-tool.jpg">
+<meta name="twitter:creator" content="@isaacolojo">
+
+<meta name="theme-color" content="#0f172a">
+<meta name="application-name" content="EntireAI Drawing Tool">
+
+<!-- WebApplication Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "EntireAI Drawing Tool",
+  "url": "https://entireai.net/tools/drawing",
+  "description": "Free online drawing tool to create sketches, paintings, and digital art instantly.",
+  "applicationCategory": "ArtApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "EntireAI",
+    "url": "https://entireai.net/"
+  }
+}
+</script>
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://entireai.net/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://entireai.net/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Drawing",
+      "item": "https://entireai.net/tools/drawing"
+    }
+  ]
+}
+</script>
+
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/logo/favicon-16x16.png">
+  <link rel="manifest" href="../images/logo/site.webmanifest">
+  <link rel="shortcut icon" href="../images/logo/favicon.ico" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            height: 100vh;
+            height: -webkit-fill-available;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            height: -webkit-fill-available;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .current-page {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        /* Drawing Area */
+        .drawing-area {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: #e8eaed;
+        }
+
+        canvas {
+            display: block;
+            background: white;
+            cursor: crosshair;
+            touch-action: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: white;
+            padding: 15px 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            border-top: 1px solid #e0e0e0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+
+        .tool-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 12px 5px;
+            border: none;
+            background: none;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tool-btn:active {
+            background: #f0f2f5;
+            transform: scale(0.95);
+        }
+
+        .tool-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tool-btn i {
+            font-size: 20px;
+        }
+
+        /* Color Palette */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .color-btn:active {
+            transform: scale(0.9);
+        }
+
+        .color-btn.active {
+            border-color: #333;
+            transform: scale(1.1);
+        }
+
+        /* Size Controls */
+        .size-controls {
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .size-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .size-preview {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .size-circle {
+            background: #333;
+            border-radius: 50%;
+        }
+
+        /* Floating Action Buttons */
+        .fab-container {
+            position: fixed;
+            bottom: 140px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .fab {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: #667eea;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .fab.redo {
+            background: #4CAF50;
+        }
+
+        .fab.clear {
+            background: #f44336;
+        }
+
+        .fab.pdf {
+            background: #2196F3;
+        }
+
+        /* Page Navigation */
+        .page-nav {
+            background: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border: none;
+            background: #667eea;
+            color: white;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .add-page {
+            background: #4CAF50;
+        }
+
+        /* Loading Overlay */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 300px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-btn.primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: #f0f2f5;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .toolbar {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+                padding: 12px 15px;
+            }
+            
+            .color-palette {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 6px;
+                padding: 12px 15px;
+            }
+            
+            .color-btn {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .fab-container {
+                bottom: 150px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .toolbar {
+                padding: 10px 15px;
+            }
+            
+            .color-palette, .size-controls {
+                padding: 10px 15px;
+            }
+            
+            .fab-container {
+                bottom: 130px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">D</div>
+                <span>Draw Board</span>
+            </div>
+            <div class="current-page" id="pageIndicator">Page 1</div>
+        </div>
+
+        <!-- Drawing Area -->
+        <div class="drawing-area">
+            <canvas id="drawingCanvas"></canvas>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <button class="tool-btn active" id="penTool" title="Pen">
+                <i class="fas fa-pen"></i>
+                <span>Pen</span>
+            </button>
+            <button class="tool-btn" id="markerTool" title="Marker">
+                <i class="fas fa-highlighter"></i>
+                <span>Marker</span>
+            </button>
+            <button class="tool-btn" id="brushTool" title="Brush">
+                <i class="fas fa-paint-brush"></i>
+                <span>Brush</span>
+            </button>
+            <button class="tool-btn" id="eraserTool" title="Eraser">
+                <i class="fas fa-eraser"></i>
+                <span>Eraser</span>
+            </button>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="color-palette">
+            <div class="color-btn active" style="background: #000000;" data-color="#000000"></div>
+            <div class="color-btn" style="background: #667eea;" data-color="#667eea"></div>
+            <div class="color-btn" style="background: #f44336;" data-color="#f44336"></div>
+            <div class="color-btn" style="background: #4CAF50;" data-color="#4CAF50"></div>
+            <div class="color-btn" style="background: #FF9800;" data-color="#FF9800"></div>
+            <div class="color-btn" style="background: #9C27B0;" data-color="#9C27B0"></div>
+        </div>
+
+        <!-- Size Controls -->
+        <div class="size-controls">
+            <span style="font-size: 14px; color: #666;">Size:</span>
+            <input type="range" class="size-slider" id="sizeSlider" min="1" max="30" value="5">
+            <div class="size-preview">
+                <div class="size-circle" id="sizeCircle"></div>
+            </div>
+        </div>
+
+        <!-- Page Navigation -->
+        <div class="page-nav">
+            <button class="nav-btn" id="prevPage" disabled>
+                <i class="fas fa-chevron-left"></i>
+                Prev
+            </button>
+            <button class="nav-btn add-page" id="addPage">
+                <i class="fas fa-plus"></i>
+                Add Page
+            </button>
+            <button class="nav-btn" id="nextPage" disabled>
+                Next
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Floating Action Buttons -->
+        <div class="fab-container">
+            <button class="fab undo" id="undoBtn" title="Undo">
+                <i class="fas fa-undo"></i>
+            </button>
+            <button class="fab redo" id="redoBtn" title="Redo">
+                <i class="fas fa-redo"></i>
+            </button>
+            <button class="fab clear" id="clearBtn" title="Clear Page">
+                <i class="fas fa-trash"></i>
+            </button>
+            <button class="fab pdf" id="exportPdf" title="Export PDF">
+                <i class="fas fa-file-pdf"></i>
+            </button>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 20px; color: #666;">Creating PDF...</p>
+        </div>
+
+        <!-- Clear Confirmation Modal -->
+        <div class="modal" id="clearModal">
+            <div class="modal-content">
+                <div class="modal-title">Clear This Page?</div>
+                <p style="color: #666; line-height: 1.5;">This will remove all drawings from the current page. This action cannot be undone.</p>
+                <div class="modal-buttons">
+                    <button class="modal-btn secondary" id="cancelClear">Cancel</button>
+                    <button class="modal-btn primary" id="confirmClear">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const pageIndicator = document.getElementById('pageIndicator');
+        const loading = document.getElementById('loading');
+        const clearModal = document.getElementById('clearModal');
+        
+        // Tool buttons
+        const penTool = document.getElementById('penTool');
+        const markerTool = document.getElementById('markerTool');
+        const brushTool = document.getElementById('brushTool');
+        const eraserTool = document.getElementById('eraserTool');
+        
+        // Color buttons
+        const colorButtons = document.querySelectorAll('.color-btn');
+        
+        // Size controls
+        const sizeSlider = document.getElementById('sizeSlider');
+        const sizeCircle = document.getElementById('sizeCircle');
+        
+        // Action buttons
+        const undoBtn = document.getElementById('undoBtn');
+        const redoBtn = document.getElementById('redoBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const exportPdf = document.getElementById('exportPdf');
+        
+        // Page navigation
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const addPageBtn = document.getElementById('addPage');
+        
+        // Modal buttons
+        const cancelClear = document.getElementById('cancelClear');
+        const confirmClear = document.getElementById('confirmClear');
+
+        // Drawing State
+        let currentTool = 'pen'; // pen, marker, brush, eraser
+        let currentColor = '#000000';
+        let currentSize = 5;
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let currentPage = 0;
+        let pages = [];
+        let history = [];
+        let historyIndex = -1;
+
+        // Initialize Canvas
+        function initCanvas() {
+            // Set canvas size to fit screen (with some padding)
+            const drawingArea = document.querySelector('.drawing-area');
+            const width = drawingArea.clientWidth - 40;
+            const height = drawingArea.clientHeight - 40;
+            
+            // Set canvas dimensions with high DPI for crisp drawing
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+            
+            // Scale context for high DPI
+            ctx.scale(dpr, dpr);
+            
+            // Center canvas
+            canvas.style.margin = '20px auto';
+            canvas.style.display = 'block';
+            
+            // Set initial background
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Update size preview
+            updateSizePreview();
+            
+            // Initialize pages array with first page
+            if (pages.length === 0) {
+                pages = [canvas.toDataURL('image/png', 1.0)];
+                saveState();
+            }
+            
+            updatePageIndicator();
+        }
+
+        // Update size preview circle
+        function updateSizePreview() {
+            sizeCircle.style.width = currentSize * 2 + 'px';
+            sizeCircle.style.height = currentSize * 2 + 'px';
+        }
+
+        // Set current tool
+        function setTool(tool) {
+            currentTool = tool;
+            
+            // Update active tool button
+            [penTool, markerTool, brushTool, eraserTool].forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (tool === 'pen') penTool.classList.add('active');
+            else if (tool === 'marker') markerTool.classList.add('active');
+            else if (tool === 'brush') brushTool.classList.add('active');
+            else if (tool === 'eraser') eraserTool.classList.add('active');
+            
+            // Set drawing properties based on tool
+            switch(tool) {
+                case 'pen':
+                    ctx.globalAlpha = 1;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    break;
+                case 'marker':
+                    ctx.globalAlpha = 0.6;
+                    ctx.lineCap = 'square';
+                    ctx.lineJoin = 'round';
+                    break;
+                case 'brush':
+                    ctx.globalAlpha = 0.8;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    break;
+                case 'eraser':
+                    ctx.globalAlpha = 1;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    break;
+            }
+        }
+
+        // Set current color
+        function setColor(color) {
+            currentColor = color;
+            
+            // Update active color button
+            colorButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.color === color) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Save current canvas state
+        function saveState() {
+            // Remove any states after current index
+            if (historyIndex < history.length - 1) {
+                history = history.slice(0, historyIndex + 1);
+            }
+            
+            // Limit history to 30 states
+            if (history.length >= 30) {
+                history.shift();
+            } else {
+                historyIndex++;
+            }
+            
+            // Save state for current page
+            history.push({
+                pageIndex: currentPage,
+                state: canvas.toDataURL('image/png', 1.0)
+            });
+            
+            // Save to pages array
+            pages[currentPage] = canvas.toDataURL('image/png', 1.0);
+            
+            updateUndoRedoButtons();
+        }
+
+        // Undo last action
+        function undo() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                const prevState = history[historyIndex];
+                
+                // If we're going back to a different page, switch to it
+                if (prevState.pageIndex !== currentPage) {
+                    switchPage(prevState.pageIndex);
+                }
+                
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                    pages[currentPage] = canvas.toDataURL('image/png', 1.0);
+                };
+                img.src = prevState.state;
+            }
+            updateUndoRedoButtons();
+        }
+
+        // Redo last undone action
+        function redo() {
+            if (historyIndex < history.length - 1) {
+                historyIndex++;
+                const nextState = history[historyIndex];
+                
+                // If we're going forward to a different page, switch to it
+                if (nextState.pageIndex !== currentPage) {
+                    switchPage(nextState.pageIndex);
+                }
+                
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                    pages[currentPage] = canvas.toDataURL('image/png', 1.0);
+                };
+                img.src = nextState.state;
+            }
+            updateUndoRedoButtons();
+        }
+
+        // Update undo/redo button states
+        function updateUndoRedoButtons() {
+            undoBtn.disabled = historyIndex <= 0;
+            redoBtn.disabled = historyIndex >= history.length - 1;
+        }
+
+        // Switch to a different page
+        function switchPage(pageIndex) {
+            if (pageIndex < 0 || pageIndex >= pages.length) return;
+            
+            // Save current page state
+            pages[currentPage] = canvas.toDataURL('image/png', 1.0);
+            
+            // Switch to new page
+            currentPage = pageIndex;
+            
+            // Load page content or create empty page
+            if (pages[currentPage]) {
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+                img.src = pages[currentPage];
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                pages[currentPage] = canvas.toDataURL('image/png', 1.0);
+            }
+            
+            // Update history for new page
+            const pageHistory = history.filter(state => state.pageIndex === currentPage);
+            if (pageHistory.length > 0) {
+                const lastState = pageHistory[pageHistory.length - 1];
+                historyIndex = history.findIndex(state => 
+                    state.pageIndex === lastState.pageIndex && 
+                    state.state === lastState.state
+                );
+            } else {
+                // Add initial state for new page
+                history.push({
+                    pageIndex: currentPage,
+                    state: pages[currentPage]
+                });
+                historyIndex = history.length - 1;
+            }
+            
+            updatePageIndicator();
+            updatePageNavigation();
+            updateUndoRedoButtons();
+        }
+
+        // Add new page
+        function addPage() {
+            // Save current page
+            pages[currentPage] = canvas.toDataURL('image/png', 1.0);
+            
+            // Add new page
+            pages.push('');
+            
+            // Switch to new page
+            switchPage(pages.length - 1);
+        }
+
+        // Update page indicator
+        function updatePageIndicator() {
+            pageIndicator.textContent = `Page ${currentPage + 1}`;
+        }
+
+        // Update page navigation buttons
+        function updatePageNavigation() {
+            prevPageBtn.disabled = currentPage === 0;
+            nextPageBtn.disabled = currentPage === pages.length - 1;
+        }
+
+        // Clear current page
+        function clearPage() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            saveState();
+        }
+
+        // Export all pages as PDF
+        async function exportToPDF() {
+            loading.style.display = 'flex';
+            
+            // Load jsPDF library dynamically
+            if (typeof window.jspdf === 'undefined') {
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.appendChild(script);
+                });
+            }
+            
+            // Create PDF
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+            });
+            
+            // Process each page
+            for (let i = 0; i < pages.length; i++) {
+                if (i > 0) {
+                    pdf.addPage();
+                }
+                
+                const pageData = pages[i];
+                if (pageData) {
+                    const img = new Image();
+                    await new Promise((resolve) => {
+                        img.onload = () => {
+                            // Calculate dimensions to fit A4 page
+                            const pageWidth = pdf.internal.pageSize.getWidth();
+                            const pageHeight = pdf.internal.pageSize.getHeight();
+                            
+                            const imgWidth = img.width;
+                            const imgHeight = img.height;
+                            
+                            // Calculate aspect ratio
+                            const ratio = Math.min(pageWidth / imgWidth, pageHeight / imgHeight) * 0.95;
+                            const width = imgWidth * ratio;
+                            const height = imgHeight * ratio;
+                            
+                            // Center on page
+                            const x = (pageWidth - width) / 2;
+                            const y = (pageHeight - height) / 2;
+                            
+                            // Add to PDF
+                            pdf.addImage(img, 'PNG', x, y, width, height);
+                            
+                            // Add page number
+                            pdf.setFontSize(10);
+                            pdf.setTextColor(100);
+                            pdf.text(`Page ${i + 1}`, pageWidth - 20, pageHeight - 10);
+                            
+                            resolve();
+                        };
+                        img.src = pageData;
+                    });
+                }
+            }
+            
+            // Save PDF
+            pdf.save(`drawing-${new Date().toISOString().split('T')[0]}.pdf`);
+            
+            loading.style.display = 'none';
+        }
+
+        // Drawing Functions
+        function startDrawing(e) {
+            isDrawing = true;
+            
+            const rect = canvas.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+            
+            // Start new path
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            
+            // Set drawing properties based on tool
+            if (currentTool === 'eraser') {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+            } else {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = currentColor;
+            }
+            
+            // Set line width based on tool
+            let lineWidth = currentSize;
+            if (currentTool === 'marker') lineWidth *= 2;
+            else if (currentTool === 'brush') lineWidth *= 1.5;
+            
+            ctx.lineWidth = lineWidth;
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            e.preventDefault();
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Draw smooth line
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            
+            // For smoother curves, add quadratic curve
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.quadraticCurveTo(lastX, lastY, x, y);
+            ctx.stroke();
+            
+            lastX = x;
+            lastY = y;
+        }
+
+        function stopDrawing() {
+            if (isDrawing) {
+                isDrawing = false;
+                ctx.closePath();
+                
+                // Reset composite operation
+                ctx.globalCompositeOperation = 'source-over';
+                
+                saveState();
+            }
+        }
+
+        // Touch Support
+        function getTouchPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            return {
+                x: touch.clientX - rect.left,
+                y: touch.clientY - rect.top
+            };
+        }
+
+        // Event Listeners
+        window.addEventListener('load', initCanvas);
+        window.addEventListener('resize', initCanvas);
+
+        // Tool button events
+        penTool.addEventListener('click', () => setTool('pen'));
+        markerTool.addEventListener('click', () => setTool('marker'));
+        brushTool.addEventListener('click', () => setTool('brush'));
+        eraserTool.addEventListener('click', () => setTool('eraser'));
+
+        // Color button events
+        colorButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                setColor(btn.dataset.color);
+                setTool('pen'); // Switch to pen when color changes
+            });
+        });
+
+        // Size slider event
+        sizeSlider.addEventListener('input', (e) => {
+            currentSize = parseInt(e.target.value);
+            updateSizePreview();
+        });
+
+        // Action button events
+        undoBtn.addEventListener('click', undo);
+        redoBtn.addEventListener('click', redo);
+        clearBtn.addEventListener('click', () => {
+            clearModal.style.display = 'flex';
+        });
+        exportPdf.addEventListener('click', exportToPDF);
+
+        // Modal events
+        cancelClear.addEventListener('click', () => {
+            clearModal.style.display = 'none';
+        });
+        confirmClear.addEventListener('click', () => {
+            clearPage();
+            clearModal.style.display = 'none';
+        });
+
+        // Page navigation events
+        prevPageBtn.addEventListener('click', () => switchPage(currentPage - 1));
+        nextPageBtn.addEventListener('click', () => switchPage(currentPage + 1));
+        addPageBtn.addEventListener('click', addPage);
+
+        // Drawing events for mouse
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Drawing events for touch
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (e.touches.length === 1) {
+                const touch = getTouchPos(e);
+                const mouseEvent = new MouseEvent('mousedown', {
+                    clientX: touch.x + canvas.getBoundingClientRect().left,
+                    clientY: touch.y + canvas.getBoundingClientRect().top
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (e.touches.length === 1) {
+                const touch = getTouchPos(e);
+                const mouseEvent = new MouseEvent('mousemove', {
+                    clientX: touch.x + canvas.getBoundingClientRect().left,
+                    clientY: touch.y + canvas.getBoundingClientRect().top
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            const mouseEvent = new MouseEvent('mouseup');
+            canvas.dispatchEvent(mouseEvent);
+        });
+
+        // Initialize
+        initCanvas();
+        setTool('pen');
+        setColor('#000000');
+        updatePageNavigation();
+        updateUndoRedoButtons();
+    </script>
+</body>
+</html>

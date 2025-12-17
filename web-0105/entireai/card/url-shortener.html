@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Free URL Shortener – Shorten Links Instantly | EntireAI</title>
+  <meta name="description" content="Shorten long URLs instantly with EntireAI’s free URL shortener. Create clean, shareable, and trackable short links with no registration required. Fast, secure, and reliable.">
+  <meta name="keywords" content="url shortener, free url shortener, link shortener, shorten url, short link generator, tiny url, custom short links, online url shortener">
+  <meta name="author" content="EntireAI">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://entireai.net/tools/url-shortener">
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="EntireAI Tools">
+  <meta property="og:url" content="https://entireai.net/tools/url-shortener">
+  <meta property="og:title" content="Free URL Shortener – Create Short Links Instantly">
+  <meta property="og:description" content="Create short, clean URLs instantly. No signup, no limits. Perfect for social media, marketing, emails, and sharing.">
+  <meta property="og:image" content="https://res.cloudinary.com/dcwnn9c0u/image/upload/v1765658844/ca5yzkiwfvu9ltoho7lv.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="EntireAI URL Shortener Interface">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free URL Shortener – EntireAI">
+  <meta name="twitter:description" content="Shorten long URLs into clean, shareable links instantly with EntireAI.">
+  <meta name="twitter:image" content="https://res.cloudinary.com/dcwnn9c0u/image/upload/v1765658844/ca5yzkiwfvu9ltoho7lv.png">
+  <meta name="twitter:site" content="@entireai">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/apple-touch-icon.png">
+     <link rel="manifest" href="/images/logo/site.webmanifest">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "URL Shortener",
+    "url": "https://entireai.net/tools/url-shortener",
+    "description": "Free online URL shortener to create short, clean, and shareable links instantly.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "EntireAI",
+      "url": "https://entireai.net"
+    },
+    "featureList": [
+      "Instant URL shortening",
+      "No registration required",
+      "Unlimited short links",
+      "Fast redirects",
+      "Secure link handling"
+    ]
+  }
+  </script>
+
+  <!-- Breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://entireai.net"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Tools",
+        "item": "https://entireai.net/tools"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "URL Shortener",
+        "item": "https://entireai.net/tools/url-shortener"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --primary: #6a11cb;
+      --secondary: #2575fc;
+      --accent: #ff5e62;
+      --success: #00b09b;
+      --dark: #121212;
+      --light: #f8f9fa;
+      --gray: #6c757d;
+      --bg-primary: #0f0c29;
+      --bg-secondary: #302b63;
+      --bg-tertiary: #24243e;
+      --card-bg: rgba(25, 25, 35, 0.9);
+      --text-color: #f8f9fa;
+      --input-bg: rgba(255, 255, 255, 0.07);
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] {
+      --primary: #7c3aed;
+      --secondary: #3b82f6;
+      --accent: #ef4444;
+      --success: #10b981;
+      --dark: #f9fafb;
+      --light: #1f2937;
+      --gray: #4b5563;
+      --bg-primary: #f3f4f6;
+      --bg-secondary: #e5e7eb;
+      --bg-tertiary: #d1d5db;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text-color: #1f2937;
+      --input-bg: rgba(0, 0, 0, 0.05);
+      --border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary), var(--bg-tertiary));
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: var(--text-color);
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      animation: fadeIn 0.8s ease;
+      transition: all 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 10px 15px;
+      cursor: pointer;
+      color: var(--text-color);
+      transition: all 0.3s ease;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      padding: 25px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 30px 30px;
+      animation: float 20s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-30px, -30px) rotate(360deg); }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .logo-icon {
+      font-size: 2.5rem;
+      background: white;
+      color: var(--primary);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .tagline {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+
+    .main-content {
+      padding: 30px;
+    }
+
+    .card {
+      background: rgba(40, 40, 50, 0.7);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    [data-theme="light"] .card {
+      background: rgba(249, 250, 251, 0.9);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      color: var(--secondary);
+    }
+
+    .card-title i {
+      font-size: 1.2rem;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text-color);
+      opacity: 0.9;
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 15px 15px 15px 45px;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 16px;
+      color: var(--text-color);
+      transition: all 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
+    }
+
+    .expiry-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .expiry-option {
+      padding: 12px;
+      background: var(--input-bg);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      color: var(--text-color);
+    }
+
+    .expiry-option:hover {
+      background: rgba(37, 117, 252, 0.1);
+    }
+
+    .expiry-option.active {
+      background: rgba(37, 117, 252, 0.2);
+      border-color: var(--secondary);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .btn {
+      padding: 15px 25px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(106, 17, 203, 0.4);
+    }
+
+    .btn-secondary {
+      background: var(--input-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .result-container {
+      margin-top: 30px;
+      animation: slideUp 0.5s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-box {
+      background: rgba(0, 176, 155, 0.1);
+      border: 1px solid rgba(0, 176, 155, 0.3);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .result-title {
+      color: var(--success);
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .short-url {
+      font-size: 1.3rem;
+      font-weight: 600;
+      word-break: break-all;
+      margin: 15px 0;
+      color: var(--text-color);
+    }
+
+    .short-url a {
+      color: var(--secondary);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .short-url a:hover {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+
+    .stats {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .stat {
+      background: var(--input-bg);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-color);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .action-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .action-btn.copy {
+      background: var(--success);
+      color: white;
+    }
+
+    .action-btn.analytics {
+      background: #ff9800;
+      color: white;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Enhanced Loading Animation */
+    .loading-container {
+      display: none;
+      text-align: center;
+      margin: 30px 0;
+      padding: 30px;
+      background: var(--card-bg);
+      border-radius: 15px;
+      border: 1px solid var(--border-color);
+    }
+
+    .loading-animation {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+    }
+
+    .loading-circle {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid transparent;
+    }
+
+    .circle-1 {
+      border-top: 4px solid var(--primary);
+      animation: spin 1.5s linear infinite;
+    }
+
+    .circle-2 {
+      border-right: 4px solid var(--secondary);
+      animation: spin 2s linear infinite reverse;
+    }
+
+    .circle-3 {
+      border-bottom: 4px solid var(--success);
+      animation: spin 2.5s linear infinite;
+    }
+
+    .loading-dots {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 15px;
+    }
+
+    .loading-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--secondary);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+    }
+
+    .loading-text {
+      margin-top: 15px;
+      color: var(--text-color);
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .loading-subtext {
+      margin-top: 5px;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .error-message {
+      background: rgba(255, 94, 98, 0.1);
+      border: 1px solid rgba(255, 94, 98, 0.3);
+      color: var(--accent);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      opacity: 0.6;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer a {
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        max-width: 100%;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .expiry-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .theme-toggle {
+        top: 15px;
+        right: 15px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+      
+      .theme-toggle span {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+      <span>Dark Mode</span>
+    </div>
+    
+    <div class="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-link"></i>
+        </div>
+        <div>
+          <h1>URL Shortener</h1>
+          <div class="tagline">Advanced URL Shortener with Analytics</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-plus-circle"></i>
+          <span>Create New Short URL</span>
+        </div>
+        
+        <div class="input-group">
+          <label for="longURL"><i class="fas fa-link"></i> Destination URL</label>
+          <div class="input-with-icon">
+            <i class="fas fa-globe"></i>
+            <input type="url" id="longURL" placeholder="https://example.com/your-long-url-here">
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label for="customKey"><i class="fas fa-pen"></i> Custom Short Name (Optional)</label>
+          <div class="input-with-icon">
+            <i class="fas fa-hashtag"></i>
+            <input type="text" id="customKey" placeholder="mycustomlink" maxlength="30">
+          </div>
+          <div class="tagline" style="font-size:0.85rem; margin-top:5px;">
+            Leave empty for auto-generated
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label><i class="fas fa-clock"></i> Expiration Time (Optional)</label>
+          <div class="expiry-options">
+            <div class="expiry-option" data-days="1">24 Hours</div>
+            <div class="expiry-option" data-days="7">1 Week</div>
+            <div class="expiry-option active" data-days="30">1 Month</div>
+            <div class="expiry-option" data-days="365">1 Year</div>
+            <div class="expiry-option" data-days="0">Never</div>
+          </div>
+          <input type="hidden" id="expiryDays" value="30">
+        </div>
+        
+        <div class="button-group">
+          <button class="btn btn-primary" id="createBtn" onclick="createShortURL()">
+            <i class="fas fa-bolt"></i> Create Short URL
+          </button>
+          <button class="btn btn-secondary" onclick="clearForm()">
+            <i class="fas fa-eraser"></i> Clear
+          </button>
+        </div>
+      </div>
+      
+      <!-- Enhanced Loading Animation -->
+      <div class="loading-container" id="loadingContainer">
+        <div class="loading-animation">
+          <div class="loading-circle circle-1"></div>
+          <div class="loading-circle circle-2"></div>
+          <div class="loading-circle circle-3"></div>
+        </div>
+        <div class="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="loading-text" id="loadingText">Processing your URL...</div>
+        <div class="loading-subtext" id="loadingSubtext">This may take a few seconds</div>
+      </div>
+      
+      <div class="error-message" id="error"></div>
+      
+      <div class="result-container" id="resultContainer" style="display:none;">
+        <div class="result-box">
+          <div class="result-title">
+            <i class="fas fa-check-circle"></i>
+            <span>Short URL Created Successfully!</span>
+          </div>
+          
+          <div class="short-url" id="shortURLDisplay"></div>
+          
+          <div class="stats">
+            <div class="stat">
+              <i class="fas fa-calendar"></i>
+              <span>Created: <span id="createdDate"></span></span>
+            </div>
+            <div class="stat">
+              <i class="fas fa-clock"></i>
+              <span>Expires: <span id="expiryDate"></span></span>
+            </div>
+            <div class="stat">
+              <i class="fas fa-chart-line"></i>
+              <span>Clicks: <span id="clickCount">0</span></span>
+            </div>
+          </div>
+          
+          <div class="action-buttons">
+            <button class="action-btn copy" onclick="copyShortURL()">
+              <i class="fas fa-copy"></i> Copy URL
+            </button>
+            <button class="action-btn analytics" onclick="viewAnalytics()">
+              <i class="fas fa-chart-bar"></i> View Analytics
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>Powered by <strong>entireai.net</strong> | <a href="https://entireai.net/" target="_blank">Explore More Tools</a></p>
+      <p>© 2025 entireai URL Shortener. All rights reserved.</p>
+    </div>
+  </div>
+
+  <script src="https://aa0105-lib.pages.dev/js-library/url-short-aa0105-lib.js"></script>
+  
+</body>
+</html>

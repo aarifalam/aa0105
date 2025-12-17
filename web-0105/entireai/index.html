@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>EntireAI | Creative Utility Tools for Daily Use</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="EntireAI offers fast and secure creative utility tools like PDF tools, image to URL, image to PDF, image compression, image converter, drawing pad, PDF to image, and more.">
+<meta name="keywords" content="EntireAI, creative tools, pdf tools, image to url, image to pdf, compress image, image converter, pdf to image, drawing pad, sequence rename, online utility tools">
+<meta name="author" content="EntireAI">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://entireai.net/">
+<link rel="alternate" hreflang="en-US" href="https://entireai.net/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EntireAI">
+<meta property="og:url" content="https://entireai.net/">
+<meta property="og:title" content="EntireAI | Creative Utility Tools Platform">
+<meta property="og:description" content="Your ultimate collection of creative utility tools including PDF tools, image tools, converters, drawing pad, and more — fast and secure.">
+<meta property="og:image" content="https://res.cloudinary.com/dcwnn9c0u/image/upload/v1764783168/uojnyqo2ln1ylb0osqtx.png">
+<meta property="og:image:alt" content="EntireAI Official Logo">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EntireAI | Creative Utility Tools">
+<meta name="twitter:description" content="Fast & secure creative tools like PDF tools, image converters, drawing pad, and more at EntireAI.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dcwnn9c0u/image/upload/v1764783168/uojnyqo2ln1ylb0osqtx.png">
+<meta name="twitter:creator" content="@isaacolojo">
+<meta name="email" content="isaac@entireai.net">
+<meta name="telegram" content="@isaacoojo">
+<meta name="instagram" content="@isaacoojo">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "EntireAI",
+  "url": "https://entireai.net/",
+  "description": "Creative utility tools platform offering PDF tools, image to URL, image to PDF, image compression, converters, drawing pad, and more.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "EntireAI",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://res.cloudinary.com/dcwnn9c0u/image/upload/v1764783168/uojnyqo2ln1ylb0osqtx.png"
+    }
+  },
+  "sameAs": [
+    "https://twitter.com/isaacolojo",
+    "https://instagram.com/isaacoojo",
+    "https://t.me/isaacoojo"
+  ],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://entireai.net/search?q={search_term}",
+    "query-input": "required name=search_term"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="apple-touch-icon" sizes="180x180" href="/images/logo/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/logo/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/logo/favicon-16x16.png"><link rel="manifest" href="/images/logo/site.webmanifest"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><link rel="stylesheet" href="main/css/main.css"><link rel="stylesheet" href="main/css/FeaturesSection.css"><link rel="stylesheet" href="main/css/subscribe-page.css"><link rel="stylesheet" href="main/css/footer.css"><link rel="stylesheet" href="main/css/header.css"><link rel="stylesheet" href="main/css/effects.css"><link rel="stylesheet" href="main/css/tools.css">
+
+<style>
+@keyframes fadeWatermark {
+  0% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+} 
+</style>
+</head>
+<body>
+<div class="entireai-scroll-progress" id="scrollProgress"></div>
+
+<header class="entireai-main-header">
+  <div class="entireai-container">
+    <div class="entireai-header-container">
+
+      <a href="/index.html" class="entireai-logo">
+        <div class="entireai-logo-icon">
+          <i class="fas fa-robot"></i>
+        </div>
+        <span class="entireai-logo-text">Entireai</span>
+      </a>
+      
+      <div class="entireai-header-search">
+        <input type="text" id="searchInput" placeholder="Search knowledge..." aria-label="Search">
+        <button type="submit" id="searchButton"><i class="fas fa-search"></i></button>
+        <div class="entireai-search-results" id="searchResults"></div>
+      </div>
+      
+      <button class="entireai-mobile-search-btn" id="mobileSearchBtn" aria-label="Toggle search">
+        <i class="fas fa-search"></i>
+      </button>
+      
+      <button class="entireai-mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <nav class="entireai-main-nav">
+        <ul class="entireai-nav-links" id="navLinks">
+          <li><a href="/index.html"><i class="fas fa-home"></i>Home</a></li>
+          <li><a href="/tools/image-to-url.html"><i class="fas fa-image"></i>Image to Url</a></li>
+          <li><a href="/pdf/index.html"><i class="fas fa-file-pdf"></i>PDF Tool</a></li>
+          <li><a href="#"><i class="fas fa-brain"></i>Blog</a></li>
+          <li><a href="/footer/contact-us/contact.html"><i class="fas fa-handshake"></i>Contact Us</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header">
+      <h1>Creative Tools</h1>
+      <p>Your ultimate collection of utility tools for various creative needs.</p>
+    </div>
+    
+    <!-- Tools Grid -->
+    <div class="tools-grid" id="toolsContainer">
+      <!-- PDF Tool -->
+      <a href="pdf/index.html" class="tool-card" data-tool="pdf-tool">
+        <div class="tool-icon tool-pdf">
+          <i class="fas fa-file-pdf"></i>
+        </div>
+        <h3>PDF Tool</h3>
+        <p>Fast and Secure</p>
+      </a>
+
+      <!-- Image to URL -->
+      <a href="tools/image-to-url.html" class="tool-card" data-tool="image-url">
+        <div class="tool-icon tool-image">
+          <i class="fas fa-link"></i>
+        </div>
+        <h3>Image to URL</h3>
+        <p>JPEG/PNG to Link</p>
+      </a>
+      
+      <!-- Image to PDF -->
+      <a href="pdf/image-to-pdf.html" class="tool-card" data-tool="image-pdf">
+        <div class="tool-icon tool-image-pdf">
+          <i class="fas fa-image"></i>
+        </div>
+        <h3>Image to PDF</h3>
+        <p>Convert PDF</p>
+      </a>
+
+      <a href="tools/compress-image.html" class="tool-card" data-tool="compress">
+                <div class="tool-icon tool-compress">
+                    <i class="fas fa-compress"></i>
+                </div>
+                <h3> Compress Image </h3>
+                <p>4MB Image to 1MB</p>
+            </a>
+
+            <a href="tools/image-converter.html" class="tool-card" data-tool="image-converter">
+                <div class="tool-icon tool-image-converter">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3>Image Converter</h3>
+                <p>JPG/ PNG/ WebP</p>
+            </a>
+
+            <a href="/pdf/pdf-to-image.html" class="tool-card" data-tool="greeting-card">
+                <div class="tool-icon tool-greeting">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h3>PDF to Image</h3>
+                <p>PDF to JPG</p>
+            </a>            
+            
+            <a href="tools/drawing.html" class="tool-card" data-tool="drawing-pad">
+                <div class="tool-icon tool-drawing">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3>Drawing Pad</h3>
+                <p>Create Art</p>
+            </a>
+
+             <a href="tools/image-rename.html" class="tool-card" data-tool="image-rename">
+                <div class="tool-icon tools-image-rename">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <h3>Sequence Rename</h3>
+                <p>Image Rename</p>
+          </a>
+          
+      <!-- Url -->
+      <a href="card/url-shortener.html" class="tool-card" data-tool="my-blog">
+        <div class="tool-icon tool-blog">
+          <i class="fas fa-link"></i>
+        </div>
+        <h3>Short Url</h3>
+        <p>Link Shortener</p>
+      </a>
+
+            <!-- card -->
+            <a href="card/index.html" class="tool-card" data-tool="contact-us">
+                <div class="tool-icon tool-contact">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3>Greeting Card</h3>
+                <p>Birthday Wish</p>
+            </a>
+    </div>
+    
+    <!-- Tagline -->
+    <div class="tagline">
+      Explore our collection of creative tools to enhance your digital experience
+    </div>
+  </div>
+
+  <!-- Premium Clickable Circular Icons -->
+  <div class="icon-links">
+    <a href="#" class="icon-circle">
+      <img src="main/blog.png" alt="Blog" class="icon-img">
+      <span class="icon-label">Blog</span>
+    </a>
+    <a href="pdf/index.html" class="icon-circle">
+      <img src="main/pdf-tools.png" alt="GAMES" class="icon-img">
+      <span class="icon-label">PDF Tools</span>
+    </a>
+    <a href="/pdf/index.html" class="icon-circle">
+      <img src="main/editing.png" alt="EDITING" class="icon-img">
+      <span class="icon-label">For Editing</span>
+    </a>
+  </div>
+
+  <div class="feature-card" data-aos="fade-up" data-aos-delay="200">✓ Web Developer Social Media ID  ⇒ @isaacoojo</div>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Powerful Features ⚡</h2>
+      </div>
+      
+      <div class="features-grid">
+        <a href="tools/image-to-url.html" class="feature-card-container">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-link"></i>
+            </div>
+            <h3>Image to Url</h3>
+            <p>📸 Instant Image to Link Converter | 🔗 Get Direct Image Links — 100% Free.</p>
+            <div class="feature-more">Free Image to URL<i class="fas fa-arrow-right"></i></div>
+          </div>
+        </a>
+
+        <a href="pdf/index.html" class="feature-card-container">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-file-pdf"></i>
+            </div>
+            <h3>PDF Tools</h3>
+            <p>Smart PDF Converter – Easy, Fast & 100% Free.</p>
+            <div class="feature-more">PDF Converter<i class="fas fa-rocket"></i></div>
+          </div>
+        </a>
+
+<a href="/card/url-shortener.html" class="feature-card-container">
+  <div class="feature-card">
+    <div class="feature-icon">
+      <i class="fas fa-link"></i>
+    </div>
+    <h3>URL Shortener</h3>
+    <p>Shorten Long URLs Instantly.</p>
+    <div class="feature-more">Link <i class="fas fa-paperclip"></i></div>
+  </div>
+</a>
+
+
+        <a href="https://entireai.net/footer/contact-us/contact.html" class="feature-card-container">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>Your Feedback</h3>
+            <p>what you want to improve ,Share your ideas and feedback with me to improve this website, even you can join me free,</p>
+            <div class="feature-more">Send Feedback<i class="fas fa-arrow-right"></i></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+<!-- Contact & Tools Section -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-title">
+      <h3>Contact & Useful Tools</h3>
+    </div>
+
+    <div class="testimonial-slider">
+      <div class="testimonial active">
+        <p class="testimonial-text">"Need help? Contact EntireAI support anytime 💙"</p>
+        <div class="student-info">
+          <img src="https://res.cloudinary.com/dcwnn9c0u/image/upload/v1764784908/walcbvw9px2zp1vc72oy.png"
+               alt="EntireAI Support" class="student-avatar">
+          <div>
+            <div class="student-name">Isaac Ojo</div>
+            <div class="student-role">
+                Owner of this website <br>
+              📩 Email: isaac@entireai.net <br>
+              📸 Instagram: @isaacoojo
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <p class="testimonial-text">"All PDF Tools — Free, Fast & Secure"</p>
+        <div class="student-info">
+          <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" 
+               alt="PDF Tools" class="student-avatar">
+          <div>
+            <div class="student-name">PDF Tools</div>
+            <div class="student-role">Convert • Merge • Compress • Image→PDF</div>
+          </div>
+        </div>
+      </div>
+      
+<!-- Make sure don't remove developer section Require name and email
+              Aarif Alam
+              AarifAlam0105@gmail.com
+-->
+<div class="testimonial">
+  <p class="testimonial-text">"Need help? Contact the developer anytime 🩷"</p>
+  <div class="student-info">
+    <img src="https://res.cloudinary.com/dcwnn9c0u/image/upload/v1751101503/aa_lvxyrl.png" 
+         alt="Aarif Alam" class="student-avatar">
+    <div>
+      <div class="student-name" id="dev-name">Aarif Alam</div>
+      <div class="student-role" id="dev-email">
+        👨‍💻 Developer <br>
+        📩 Email: aarifalam0105@gmail.com <br>
+        💬 Telegram: @aarifalam09
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="slider-controls">
+        <div class="slider-dot active" data-slide="0"></div>
+        <div class="slider-dot" data-slide="1"></div>
+        <div class="slider-dot" data-slide="2"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  
+  <section class="cta" id="signup">
+    <div class="container">
+<h2>Subscribe to get updates on new Tools</h2>
+<p>
+  Join thousands of friends, students, and mentors. Sign up now to  get free access to all basic features and new tools.
+</p>
+
+
+      <form class="signup-form" id="emailSignupForm">
+        <label for="email" class="visually-hidden">Email Address</label>
+        
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-input"
+          placeholder="Enter your email address"
+          required
+          autocomplete="email"
+        >
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-text">Join me 🩷</span>
+          <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+        </button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- Add EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  
+<!-- Footer -->
+<footer class="main-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">
+          <div class="footer-logo-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <span class="footer-logo-text">Entireai</span>
+        </div>
+        <p class="footer-about">One Website Endless Solution | learn or enjoy.</p>
+        <h4>Thank you so much 🩷 !</h4>
+
+<div class="social-links">
+  <a href="https://t.me/isaacoojo" class="social-link" target="_blank">
+    <i class="fab fa-telegram"></i>
+  </a>
+
+  <a href="https://youtube.com/@isaacoojo" class="social-link" target="_blank">
+    <i class="fab fa-youtube"></i>
+  </a>
+
+  <a href="https://www.instagram.com/isaacoojo/" class="social-link" target="_blank">
+    <i class="fab fa-instagram"></i>
+  </a>
+
+  <a href="https://x.com/isaacolojo" class="social-link" target="_blank">
+    <i class="fab fa-twitter"></i>
+  </a>
+</div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Explore the Site</h3>
+        <ul class="footer-links">
+          <li><a href="index.html" class="active"><i class="fas fa-home"></i>Home</a></li>
+          <li><a href="#"><i class="fas fa-brain"></i> Blog</a></li>
+          <li><a href="tools/image-to-url.html"><i class="fas fa-image"></i>Image to Url</a></li>
+          <li><a href="tools/drawing.html"><i class="fas fa-palette"></i>Digital Board</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="footer/privacy-policy.html"><i class="fas fa-chevron-right"></i>Privacy Policy</a></li>
+          <li><a href="footer/Terms.html"><i class="fas fa-chevron-right"></i>Terms & Conditions</a></li>
+          <li><a href="footer/About.html"><i class="fas fa-chevron-right"></i>About Us</a></li>
+          <li><a href="footer/contact-us/contact.html"><i class="fas fa-chevron-right"></i>Contact Us</a></li>
+        </ul>
+      </div>
+      
+ <div class="footer-section">
+  <h3>Developer Contact Info</h3>
+  <ul class="footer-links">
+
+    <li>
+      <a href="mailto:isaac@entireai.net">
+        <i class="fas fa-envelope"></i> isaac@entireai.net
+      </a>
+    </li>
+
+    <li>
+      <a href="https://t.me/isaacoojo" target="_blank">
+        <i class="fab fa-telegram"></i> Telegram
+      </a>
+    </li>
+
+    <li>
+      <a href="mailto:isaac@entireai.net">
+        <i class="fas fa-envelope"></i> Mail Box
+      </a>
+    </li>
+
+    <li>
+      <a href="https://www.google.com/maps/place/United+States" target="_blank">
+        <i class="fas fa-map-marker-alt"></i> United States
+      </a>
+    </li>
+
+  </ul>
+</div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2025 All Rights Reserved. | Designed with <i class="fas fa-heart" style="color: var(--secondary);"></i>by @isaacoojo</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Do not remove this — it will break the entire code. This is my social media username, follow me! -->
+<div id="creator-watermark" style="position:fixed;bottom:10px;right:10px;background:rgba(0,0,0,0.7);color:white;padding:8px 12px;border-radius:4px;font-size:12px;z-index:9999;transition:opacity 0.5s;animation:fadeWatermark 20s forwards">
+  Created by @isaacoojo
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTop">
+  <i class="fas fa-arrow-up"></i>
+</a>
+
+<!-- JavaScript Files -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true });
+</script>
+<script src="main/js/main.js"></script>
+<script src="main/js/main1.js"></script>
+<script src="main/js/header.js"></script>
+
+<script>
+const testimonials=document.querySelectorAll(".testimonial"),dots=document.querySelectorAll(".slider-dot");let currentSlide=0,slideInterval;function showSlide(e){testimonials.forEach(e=>e.classList.remove("active")),dots.forEach(e=>e.classList.remove("active")),testimonials[e].classList.add("active"),dots[e].classList.add("active"),currentSlide=e}if(testimonials.length&&dots.length){function e(){clearInterval(slideInterval),slideInterval=setInterval(()=>{let e=(currentSlide+1)%testimonials.length;showSlide(e)},5e3)}dots.forEach((t,l)=>{t.addEventListener("click",()=>{clearInterval(slideInterval),showSlide(l),e()})}),showSlide(0),e()}const backToTop=document.getElementById("backToTop");backToTop&&(window.addEventListener("scroll",()=>{backToTop.classList.toggle("visible",window.scrollY>300)}),backToTop.addEventListener("click",e=>{e.preventDefault(),window.scrollTo({top:0,behavior:"smooth"})})),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){let t=this.getAttribute("href");if("#"===t)return;let l=document.querySelector(t);if(l){e.preventDefault(),window.scrollTo({top:l.offsetTop-80,behavior:"smooth"});let o=document.getElementById("navLinks"),i=document.getElementById("mobileMenuBtn");if(o&&o.classList.contains("show")){o.classList.remove("show");let s=i.querySelector("i");s.classList.remove("fa-times"),s.classList.add("fa-bars")}}})}),function(){let e={creatorName:"@isaacoojo",checkInterval:5e3,originalUrl:"https://aarifalam.life/"},t=()=>{try{let t=document.getElementById("creator-watermark");return!!t&&t.textContent.includes(e.creatorName)&&"none"!==getComputedStyle(t).display}catch(l){return!1}},l=()=>{let t=`
+      .body-blocked {
+        pointer-events: none;
+        user-select: none;
+        overflow: hidden;
+      }
+      .blocked-message {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999;
+        padding: 20px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+      }
+      .blocked-message h1 {
+        color: #ff0000;
+        margin-bottom: 20px;
+      }
+    `,l=document.createElement("style");l.textContent=t,document.head.appendChild(l),document.body.classList.add("body-blocked");let o=document.createElement("div");o.className="blocked-message",o.innerHTML=`
+      <h1>⚠️ Signature Required</h1>
+      <p>This tool requires the original creator signature to function.</p>
+      <p>Please restore the "@isaacoojo" signature.</p>
+      <p>Original version: <a href="${e.originalUrl}" target="_blank">${e.originalUrl}</a></p>
+    `,document.body.appendChild(o)};if(!t()){l();return}setInterval(()=>{t()||l()},e.checkInterval)}();
+</script>
+</body>
+</html>

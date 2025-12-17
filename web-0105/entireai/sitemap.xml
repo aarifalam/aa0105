@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Main Pages -->
+  <url>
+    <loc>https://entireai.net/index.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.95</priority>
+    <changefreq>daily</changefreq>
+  </url>
+
+  <!-- Footer Pages -->
+  <url>
+    <loc>https://entireai.net/footer/About.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.70</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/footer/privacy-policy.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.70</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/footer/Terms.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.70</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/footer/contact-us/contact.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.65</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <!-- PDF Tools Main -->
+  <url>
+    <loc>https://entireai.net/pdf/index.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.90</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- PDF Tools -->
+  <url>
+    <loc>https://entireai.net/pdf/image-to-pdf.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.85</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/pdf/merge-pdf.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.80</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/pdf/pdf-image-watermark.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.75</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/pdf/pdf-reorder.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.75</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/pdf/pdf-text-watermark.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.75</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/pdf/pdf-to-image.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.80</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/pdf/remove-pdf-page.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.75</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/pdf/split-pdf.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.75</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/pdf/text-to-pdf.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.75</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Image Tools -->
+  <url>
+    <loc>https://entireai.net/tools/compress-image.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.80</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/tools/drawing.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.70</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://entireai.net/tools/image-converter.html</loc>
+    <lastmod>2025-12-05</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+</urlset>

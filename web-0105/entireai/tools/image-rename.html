@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="https://schema.org/WebApplication">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Rename Tool – Bulk Rename Images Online Free | EntireAI</title>
+
+<meta name="description" content="Free online Image Rename Tool by EntireAI to rename multiple images in bulk. Upload, organize, auto-rename and download instantly. No signup required.">
+<meta name="keywords" content="image rename tool, bulk image rename, batch image renaming, rename multiple images, image organizer online, entireai tools">
+
+<meta name="author" content="Isaac Ojo">
+<meta name="generator" content="Developed by AarifAlam0105">
+
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<link rel="canonical" href="https://entireai.net/tools/image-rename">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EntireAI">
+<meta property="og:url" content="https://entireai.net/tools/image-rename">
+<meta property="og:title" content="Bulk Image Rename Tool Online Free | EntireAI">
+<meta property="og:description" content="Rename multiple images at once using EntireAI’s free Image Rename Tool. Fast, secure & no watermark.">
+<meta property="og:image" content="/images/image-rename.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EntireAI Image Rename Tool Interface">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bulk Image Rename Tool Online Free | EntireAI">
+<meta name="twitter:description" content="Rename multiple images instantly using EntireAI’s free batch image renaming tool.">
+<meta name="twitter:image" content="/images/image-rename.jpg">
+<meta name="twitter:creator" content="@isaacolojo">
+
+<meta name="theme-color" content="#0f172a">
+<meta name="application-name" content="EntireAI Image Rename Tool">
+
+<!-- WebApplication Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "EntireAI Image Rename Tool",
+  "url": "https://entireai.net/tools/image-rename",
+  "description": "Free online tool to rename multiple images in bulk with batch processing and instant download.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "featureList": [
+    "Bulk Image Rename",
+    "Drag & Drop Upload",
+    "Custom Naming Pattern",
+    "ZIP Download"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "EntireAI",
+    "url": "https://entireai.net/"
+  }
+}
+</script>
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://entireai.net/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://entireai.net/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Image Rename Tool",
+      "item": "https://entireai.net/tools/image-rename"
+    }
+  ]
+}
+</script>
+  
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="stylesheet" href="css/image-rename.css">
+     <link rel="stylesheet" href="../main/css/header.css">
+     <link rel="apple-touch-icon" sizes="180x180" href="../images/logo/apple-touch-icon.png">
+     <link rel="icon" type="image/png" sizes="32x32" href="../images/logo/favicon-32x32.png">
+     <link rel="icon" type="image/png" sizes="16x16" href="../images/logo/favicon-16x16.png">
+     <link rel="manifest" href="../images/logo/site.webmanifest">
+     <link rel="shortcut icon" href="../images/logo/favicon.ico" type="image/x-icon">
+
+
+
+</head>
+<body>
+ <!-- Scroll Progress Indicator -->
+<div class="entireai-scroll-progress" id="scrollProgress"></div>
+
+<!-- Header Section -->
+<header class="entireai-main-header">
+  <div class="entireai-container">
+    <div class="entireai-header-container">
+
+      <a href="/index.html" class="entireai-logo">
+        <div class="entireai-logo-icon">
+          <i class="fas fa-robot"></i>
+        </div>
+        <span class="entireai-logo-text">entireai</span>
+      </a>
+      
+      <!-- Search Box -->
+      <div class="entireai-header-search">
+        <input type="text" id="searchInput" placeholder="Search knowledge..." aria-label="Search">
+        <button type="submit" id="searchButton"><i class="fas fa-search"></i></button>
+        <div class="entireai-search-results" id="searchResults"></div>
+      </div>
+      
+      <!-- Mobile Search Toggle Button -->
+      <button class="entireai-mobile-search-btn" id="mobileSearchBtn" aria-label="Toggle search">
+        <i class="fas fa-search"></i>
+      </button>
+      
+      <button class="entireai-mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <nav class="entireai-main-nav">
+        <ul class="entireai-nav-links" id="navLinks">
+          <li><a href="/index.html"><i class="fas fa-home"></i>Home</a></li>
+          <li><a href="/tools/image-to-url.html"><i class="fas fa-image"></i>Image to url</a></li>
+          <li><a href="/pdf/index.html"><i class="fas fa-file-pdf"></i>PDF Tool</a></li>
+          <li><a href="#"><i class="fas fa-brain"></i>MY BLOG</a></li>
+          <li><a href="/footer/contact-us/contact.html"><i class="fas fa-handshake"></i>Contact Us</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</header>
+
+    <div class="container">
+        <header>
+            <h1>Advanced Image Rename Tool</h1>
+            <p class="subtitle">Select, arrange, rename and download your images</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="upload-section" id="dropZone">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <p>Drag & drop images here or click to browse</p>
+                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                    <button class="btn" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-folder-open"></i> Select Images
+                    </button>
+                </div>
+                
+                <div class="rename-section">
+                    <input type="text" class="rename-input" id="renameInput" placeholder="Enter base name (e.g. q)">
+                    <button class="btn" id="renameBtn" onclick="renameImages()">
+                        <i class="fas fa-tag"></i> Rename All
+                    </button>
+                </div>
+                
+                <div class="sort-options">
+                    <button class="btn sort-btn" onclick="sortByDate()">
+                        <i class="fas fa-calendar"></i> Sort by Date
+                    </button>
+                    <button class="btn sort-btn" onclick="sortByName()">
+                        <i class="fas fa-font"></i> Sort by Name
+                    </button>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn" onclick="addMoreImages()">
+                        <i class="fas fa-plus"></i> Add More
+                    </button>
+                    <button class="btn" id="downloadBtn" onclick="processDownload()" disabled>
+                        <i class="fas fa-download"></i> Download All
+                    </button>
+                    <button class="btn" onclick="clearAll()">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+                
+                <div class="instructions">
+                    <h3>How to use:</h3>
+                    <ol>
+                        <li>Select images using the button or drag & drop</li>
+                        <li>Arrange images by dragging them to your desired order</li>
+                        <li>Remove any image by clicking the × button</li>
+                        <li>Enter a base name and click "Rename All"</li>
+                        <li>Click "Download All" to get your renamed images as ZIP</li>
+                        <li>Use sort options to rearrange images by date or name</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <h2>Your Images <span id="imageCount">(0)</span></h2>
+                <p>Drag to rearrange the order of images</p>
+                
+                <div class="image-list" id="imageList">
+                    <!-- Images will be added here dynamically -->
+                    <div class="placeholder" style="text-align: center; padding: 30px; color: #777;">
+                        <i class="fas fa-images" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>No images selected yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="preview-modal" id="previewModal">
+        <span class="close-modal" onclick="closePreview()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Preview">
+        </div>
+    </div>
+    
+    <div class="download-modal" id="downloadModal">
+        <div class="download-content">
+            <div class="download-icon">
+                <i class="fas fa-file-archive"></i>
+            </div>
+            <h2>Your Images Are Ready!</h2>
+            <p>All images have been renamed and packaged into a ZIP file</p>
+            
+            <div class="progress-bar">
+                <div class="progress" id="downloadProgress"></div>
+            </div>
+            
+            <p id="statusText">Preparing download...</p>
+            
+            <div class="action-buttons">
+                <button class="btn" onclick="downloadZip()">
+                    <i class="fas fa-download"></i> Download ZIP
+                </button>
+                <button class="btn" onclick="closeDownloadModal()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer"></div>
+
+  <script src="js/image-rename.js"></script>
+  <script src="../main/js/header.js"></script>
+
+</body>
+</html>
