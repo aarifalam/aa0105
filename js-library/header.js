@@ -1,1 +1,349 @@
-document.addEventListener("DOMContentLoaded",function(){var e,t=document.getElementById("mobileMenuBtn"),r=document.getElementById("navLinks");t.addEventListener("click",function(){r.classList.toggle("active"),t.innerHTML=r.classList.contains("active")?'<i class="fas fa-times"></i>':'<i class="fas fa-bars"></i>'});for(var i=document.querySelectorAll(".entireai-nav-links a"),n=function(){window.innerWidth<=992&&(r.classList.remove("active"),t.innerHTML='<i class="fas fa-bars"></i>')},a=0;a<i.length;a++)i[a].addEventListener("click",n);var s=document.getElementById("scrollProgress");s&&window.addEventListener("scroll",function(){var e=document.documentElement.scrollHeight-document.documentElement.clientHeight,t=window.pageYOffset/e*100;s.style.width=t+"%"});var o=document.querySelector(".entireai-main-header"),l=0;window.addEventListener("scroll",function(){var e=window.pageYOffset;e>100?o.classList.add("scrolled"):o.classList.remove("scrolled"),e<=0&&(o.style.transform="translateY(0)"),e>l&&e>o.offsetHeight?o.style.transform="translateY(-100%)":e<l&&(o.style.transform="translateY(0)"),l=e});var d=document.getElementById("searchInput"),c=document.getElementById("searchButton"),f=document.getElementById("searchResults"),m=document.getElementById("mobileSearchBtn"),u=document.querySelector(".entireai-header-search"),g=[{title:"Blog",url:"/blog/index.html",description:"Discover the latest blogs and articles on EntireAI platform",keywords:"blog, articles, writing, insights"},{title:"Contact Us",url:"/footer/contact-us/contact.html",description:"Get in touch with EntireAI team",keywords:"contact, email, message, reach out"},{title:"Feedback",url:"/footer/contact-us/feedback.html",description:"Share your feedback with EntireAI",keywords:"feedback, comment, suggestions"},{title:"Game Zone",url:"/Game/index.html",description:"Fun games and interactive experiences",keywords:"games, play, fun, entertainment"},{title:"Word Meaning Game",url:"/Game/word-meaning-page.html",description:"Enhance your vocabulary with interactive word games",keywords:"vocabulary, words, game, learning"},{title:"Image to URL",url:"/tools/image-to-url.html",description:"Convert your images into shareable URLs",keywords:"image, url, convert, share"},{title:"Greeting Card",url:"/tools/greeting-card.html",description:"Create beautiful digital greeting cards",keywords:"cards, greetings, messages, digital"},{title:"Image to PDF",url:"/pdf/image-to-pdf",description:"Convert JPG/PNG images into PDF",keywords:"image, pdf, convert, jpg, png"},{title:"PDF to PNG/JPG",url:"/pdf/pdf-to-image",description:"Convert PDF to high-quality PNG or JPG",keywords:"pdf, png, jpg, convert"},{title:"Merge PDF",url:"/pdf/merge-pdf",description:"Combine multiple PDFs into one document",keywords:"pdf, merge, combine, document"},{title:"Split PDF",url:"/pdf/split-pdf",description:"Divide PDF into multiple files",keywords:"pdf, split, divide, pages"},{title:"Remove PDF Pages",url:"/pdf/remove-pdf-page",description:"Delete unwanted pages from PDF",keywords:"pdf, remove, delete, pages"},{title:"PDF Reorder Pages",url:"/pdf/pdf-reorder",description:"Rearrange PDF pages",keywords:"pdf, reorder, pages, arrange"},{title:"Text to PDF",url:"/pdf/text-to-pdf",description:"Transform text files into PDF documents",keywords:"text, pdf, convert, document"},{title:"PDF Image Watermark",url:"/pdf/pdf-image-watermark",description:"Add image watermarks to PDF",keywords:"pdf, watermark, image, protection"},{title:"PDF Text Watermark",url:"/pdf/pdf-text-watermark",description:"Add text watermarks to PDF",keywords:"pdf, watermark, text, protection"}];function p(t){if(clearTimeout(e),!t.trim()){f.style.display="none";return}c.classList.add("entireai-search-loading"),e=setTimeout(function(){var e=t.toLowerCase(),r=g.filter(function(t){return -1!==t.title.toLowerCase().indexOf(e)||-1!==t.description.toLowerCase().indexOf(e)||-1!==t.keywords.toLowerCase().indexOf(e)});c.classList.remove("entireai-search-loading"),function e(t){if(f.innerHTML="",0===t.length)f.innerHTML='<div class="entireai-no-results">No results found. Try different keywords.</div>';else for(var r=0;r<t.length;r++){var i=t[r],n=document.createElement("a");n.href=i.url,n.className="entireai-search-result-item",n.innerHTML="<h4>"+i.title+"</h4><p>"+i.description+"</p><small>"+i.url+"</small>",f.appendChild(n)}f.style.display="block"}(r)},300)}m.addEventListener("click",function(){u.classList.toggle("active"),u.classList.contains("active")&&d.focus()}),d.addEventListener("input",function(){p(d.value)}),c.addEventListener("click",function(e){e.preventDefault(),p(d.value)}),d.addEventListener("keydown",function(e){if("Enter"===e.key){var t=Array.prototype.slice.call(f.querySelectorAll(".entireai-search-result-item"));t.length>0&&(window.location.href=t[0].href)}if("Escape"===e.key&&(f.style.display="none",d.blur()),"ArrowDown"===e.key||"ArrowUp"===e.key){var r=f.querySelectorAll(".entireai-search-result-item");if(0===r.length)return;for(var i=-1,n=0;n<r.length;n++)if(r[n]===document.activeElement){i=n;break}"ArrowDown"===e.key?(e.preventDefault(),i<r.length-1?r[i+1].focus():r[0].focus()):"ArrowUp"===e.key&&(e.preventDefault(),i>0?r[i-1].focus():r[r.length-1].focus())}}),document.addEventListener("click",function(e){e.target.closest(".entireai-header-search")||e.target.closest("#mobileSearchBtn")||(f.style.display="none",window.innerWidth<=992&&u.classList.remove("active"))}),!function e(){for(var t=window.location.pathname,r=document.querySelectorAll(".entireai-nav-links a"),i=0;i<r.length;i++){var n=r[i],a=n.getAttribute("href");n.classList.remove("active"),(t.endsWith(a)||"index.html"===a&&(t.endsWith("/")||t.endsWith("/index.html")))&&n.classList.add("active")}}()});
+document.addEventListener('DOMContentLoaded', function() {
+  // Mobile Menu Toggle
+  var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  var navLinks = document.getElementById('navLinks');
+  
+  mobileMenuBtn.addEventListener('click', function() {
+    navLinks.classList.toggle('active');
+    mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ?
+      '<i class="fas fa-times"></i>' : 
+      '<i class="fas fa-bars"></i>';
+  });
+  
+  // Close mobile menu when clicking on a link
+  var navLinksAll = document.querySelectorAll('.entireai-nav-links a');
+  var closeMenuHandler = function() {
+    if (window.innerWidth <= 992) {
+      navLinks.classList.remove('active');
+      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+  };
+  
+  for (var i = 0; i < navLinksAll.length; i++) {
+    navLinksAll[i].addEventListener('click', closeMenuHandler);
+  }
+  
+  // Scroll Progress Indicator
+  var scrollProgress = document.getElementById('scrollProgress');
+  if (scrollProgress) {
+    window.addEventListener('scroll', function() {
+      var windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = (window.pageYOffset / windowHeight) * 100;
+      scrollProgress.style.width = scrolled + '%';
+    });
+  }
+  
+  // Header hide/show on scroll with shrink effect
+  var header = document.querySelector('.entireai-main-header');
+  var lastScroll = 0;
+  
+  window.addEventListener('scroll', function() {
+    var currentScroll = window.pageYOffset;
+    
+    // Add scrolled class for shrink effect
+    if (currentScroll > 100) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    
+    // Hide/show on scroll
+    if (currentScroll <= 0) {
+      header.style.transform = 'translateY(0)';
+    }
+    
+    if (currentScroll > lastScroll && currentScroll > header.offsetHeight) {
+      header.style.transform = 'translateY(-100%)';
+    } else if (currentScroll < lastScroll) {
+      header.style.transform = 'translateY(0)';
+    }
+    
+    lastScroll = currentScroll;
+  });
+  
+  // Enhanced Search Functionality
+  var searchInput = document.getElementById('searchInput');
+  var searchButton = document.getElementById('searchButton');
+  var searchResults = document.getElementById('searchResults');
+  var mobileSearchBtn = document.getElementById('mobileSearchBtn');
+  var headerSearch = document.querySelector('.entireai-header-search');
+  
+  // Updated search data with full PDF tools paths
+  var searchData = [
+    // Blog & Contact
+  {
+    title: "Home",
+    url: "/index.html",
+    description: "EntireAI homepage",
+    keywords: "home, entireai"
+  },
+
+  // Image Tools
+  {
+    title: "Image to URL",
+    url: "/tools/image-to-url.html",
+    description: "Image to direct link",
+    keywords: "image url, link"
+  },
+  {
+    title: "Compress Image",
+    url: "/tools/compress-image.html",
+    description: "Reduce image size",
+    keywords: "compress image"
+  },
+  {
+    title: "Image Converter",
+    url: "/tools/image-converter.html",
+    description: "Convert image formats",
+    keywords: "image converter"
+  },
+  {
+    title: "Drawing Pad",
+    url: "/tools/drawing.html",
+    description: "Online drawing tool",
+    keywords: "drawing, sketch"
+  },
+  {
+    title: "Sequence Rename",
+    url: "/tools/image-rename.html",
+    description: "Rename images in order",
+    keywords: "image rename"
+  },
+
+  // URL & Card
+  {
+    title: "URL Shortener",
+    url: "/card/url-shortener.html",
+    description: "Shorten long links",
+    keywords: "short url"
+  },
+  {
+    title: "Greeting Card",
+    url: "/card/index.html",
+    description: "Create greeting cards",
+    keywords: "greeting card"
+  },
+
+  // PDF Main
+  {
+    title: "PDF Tools",
+    url: "/pdf/index.html",
+    description: "All PDF tools",
+    keywords: "pdf tools"
+  },
+
+  // PDF – Popular
+  {
+    title: "Image to PDF",
+    url: "/pdf/image-to-pdf.html",
+    description: "JPG/PNG to PDF",
+    keywords: "image to pdf"
+  },
+  {
+    title: "PDF to Image",
+    url: "/pdf/pdf-to-image.html",
+    description: "PDF to JPG/PNG",
+    keywords: "pdf to image"
+  },
+  {
+    title: "Merge PDF",
+    url: "/pdf/merge-pdf.html",
+    description: "Combine PDFs",
+    keywords: "merge pdf"
+  },
+  {
+    title: "Split PDF",
+    url: "/pdf/split-pdf.html",
+    description: "Split PDF pages",
+    keywords: "split pdf"
+  },
+  {
+    title: "Remove PDF Page",
+    url: "/pdf/remove-pdf-page.html",
+    description: "Delete PDF pages",
+    keywords: "remove pdf page"
+  },
+
+  // PDF – Conversion / Edit
+  {
+    title: "PDF Reorder Pages",
+    url: "/pdf/pdf-reorder.html",
+    description: "Rearrange pages",
+    keywords: "pdf reorder"
+  },
+  {
+    title: "Text to PDF",
+    url: "/pdf/text-to-pdf.html",
+    description: "Text to PDF",
+    keywords: "text to pdf"
+  },
+  {
+    title: "PDF Image Watermark",
+    url: "/pdf/pdf-image-watermark.html",
+    description: "Image watermark",
+    keywords: "pdf watermark image"
+  },
+  {
+    title: "PDF Text Watermark",
+    url: "/pdf/pdf-text-watermark.html",
+    description: "Text watermark",
+    keywords: "pdf watermark text"
+  },
+  {
+    title: "Contact us",
+    url: "/footer/contact-us/contact.html",
+    description: "contact details",
+    keywords: "contact"
+  }
+
+
+];
+
+  
+  // Mobile search toggle
+  mobileSearchBtn.addEventListener('click', function() {
+    headerSearch.classList.toggle('active');
+    if (headerSearch.classList.contains('active')) {
+      searchInput.focus();
+    }
+  });
+  
+  // Function to perform search with debounce
+  var searchTimeout;
+  function performSearch(query) {
+    clearTimeout(searchTimeout);
+    
+    if (!query.trim()) {
+      searchResults.style.display = 'none';
+      return;
+    }
+    
+    // Add loading state
+    searchButton.classList.add('entireai-search-loading');
+    
+    searchTimeout = setTimeout(function() {
+      var lowerQuery = query.toLowerCase();
+      var results = searchData.filter(function(item) {
+        return item.title.toLowerCase().indexOf(lowerQuery) !== -1 || 
+               item.description.toLowerCase().indexOf(lowerQuery) !== -1 ||
+               item.keywords.toLowerCase().indexOf(lowerQuery) !== -1;
+      });
+      
+      // Remove loading state
+      searchButton.classList.remove('entireai-search-loading');
+      
+      displayResults(results);
+    }, 300);
+  }
+  
+  // Function to display results
+  function displayResults(results) {
+    searchResults.innerHTML = '';
+    
+    if (results.length === 0) {
+      searchResults.innerHTML = '<div class="entireai-no-results">No results found. Try different keywords.</div>';
+    } else {
+      for (var j = 0; j < results.length; j++) {
+        var result = results[j];
+        var link = document.createElement('a');
+        link.href = result.url;
+        link.className = 'entireai-search-result-item';
+        link.innerHTML = 
+          '<h4>' + result.title + '</h4>' +
+          '<p>' + result.description + '</p>' +
+          '<small>' + result.url + '</small>';
+        searchResults.appendChild(link);
+      }
+    }
+    
+    searchResults.style.display = 'block';
+  }
+  
+  // Event listeners
+  searchInput.addEventListener('input', function() {
+    performSearch(searchInput.value);
+  });
+  
+  searchButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    performSearch(searchInput.value);
+  });
+  
+  // Keyboard navigation
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      var results = Array.prototype.slice.call(searchResults.querySelectorAll('.entireai-search-result-item'));
+      if (results.length > 0) {
+        window.location.href = results[0].href;
+      }
+    }
+    
+    if (e.key === 'Escape') {
+      searchResults.style.display = 'none';
+      searchInput.blur();
+    }
+    
+    // Arrow key navigation through results
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      var items = searchResults.querySelectorAll('.entireai-search-result-item');
+      if (items.length === 0) return;
+      
+      var currentIndex = -1;
+      for (var k = 0; k < items.length; k++) {
+        if (items[k] === document.activeElement) {
+          currentIndex = k;
+          break;
+        }
+      }
+      
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (currentIndex < items.length - 1) {
+          items[currentIndex + 1].focus();
+        } else {
+          items[0].focus();
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (currentIndex > 0) {
+          items[currentIndex - 1].focus();
+        } else {
+          items[items.length - 1].focus();
+        }
+      }
+    }
+  });
+  
+  // Close results when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.entireai-header-search') && !e.target.closest('#mobileSearchBtn')) {
+      searchResults.style.display = 'none';
+      if (window.innerWidth <= 992) {
+        headerSearch.classList.remove('active');
+      }
+    }
+  });
+
+  // Add active state to current page in navigation
+  function setActiveNavLink() {
+    var currentPage = window.location.pathname;
+    var navLinks = document.querySelectorAll('.entireai-nav-links a');
+    
+    for (var i = 0; i < navLinks.length; i++) {
+      var link = navLinks[i];
+      var linkPath = link.getAttribute('href');
+      
+      // Remove active class from all links
+      link.classList.remove('active');
+      
+      // Add active class to current page link
+      if (currentPage.endsWith(linkPath) || 
+          (linkPath === 'index.html' && (currentPage.endsWith('/') || currentPage.endsWith('/index.html')))) {
+        link.classList.add('active');
+      }
+    }
+  }
+  
+  // Set active nav link on page load
+  setActiveNavLink();
+});
