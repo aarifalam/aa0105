@@ -1,0 +1,1 @@
+!async function(){try{let o=await fetch("https://aa0105-lib.pages.dev/json-lib/cloud-greeting-card.json",{cache:"no-store"});if(!o.ok)throw Error("Config fetch failed");window.CLOUDINARY_CONFIG=await o.json(),window.CLOUDINARY_READY=!0,console.log("Cloudinary config ready")}catch(a){console.error("Cloudinary config load error:",a),window.CLOUDINARY_READY=!1}}();
