@@ -403,374 +403,109 @@ fetch("https://aa0105-lib.pages.dev/json-lib/cloud-greeting-card.json").then(e=>
     </div>
     
 <script>
-    // Enhanced flip card functionality with smooth animations and accessibility
+    // Minimal enhanced flip functionality that doesn't conflict with existing code
     (function() {
         'use strict';
         
-        const card = document.querySelector('.flip-card');
-        if (!card) return;
-        
-        const inner = card.querySelector('.flip-card-inner');
-        let isAnimating = false;
-        let isFlipped = false;
-        let animationFrameId = null;
-        
-        // Create floating particles effect
-        function createFloatingParticles() {
-            const particles = document.createElement('div');
-            particles.className = 'floating-particles';
-            particles.style.cssText = `
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: 10;
-                border-radius: inherit;
-                overflow: hidden;
-            `;
-            
-            inner.appendChild(particles);
-            
-            // Create 20 particles
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.style.cssText = `
-                    position: absolute;
-                    width: ${Math.random() * 4 + 2}px;
-                    height: ${Math.random() * 4 + 2}px;
-                    background: rgba(255, 255, 255, ${Math.random() * 0.6 + 0.2});
-                    border-radius: 50%;
-                    top: ${Math.random() * 100}%;
-                    left: ${Math.random() * 100}%;
-                    animation: floatParticle ${Math.random() * 3 + 2}s ease-in-out infinite;
-                    animation-delay: ${Math.random() * 1}s;
-                `;
-                particles.appendChild(particle);
-            }
-            
-            // Add CSS for animation
-            if (!document.querySelector('#particle-animation')) {
-                const style = document.createElement('style');
-                style.id = 'particle-animation';
-                style.textContent = `
-                    @keyframes floatParticle {
-                        0%, 100% {
-                            transform: translate(0, 0) scale(1);
-                            opacity: 0.3;
-                        }
-                        50% {
-                            transform: translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px) scale(1.2);
-                            opacity: 0.8;
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            return particles;
+        // Wait for DOM to be fully loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initFlipCard);
+        } else {
+            setTimeout(initFlipCard, 100); // Small delay to ensure other scripts run first
         }
         
-        // Add glow effect during animation
-        function addGlowEffect() {
-            if (!card.querySelector('.card-glow')) {
-                const glow = document.createElement('div');
-                glow.className = 'card-glow';
-                glow.style.cssText = `
-                    position: absolute;
-                    top: -10px;
-                    left: -10px;
-                    right: -10px;
-                    bottom: -10px;
-                    background: radial-gradient(circle at center, 
-                        rgba(255,255,255,0.3) 0%, 
-                        rgba(255,255,255,0.1) 40%, 
-                        transparent 70%);
-                    border-radius: 30px;
-                    z-index: -1;
-                    opacity: 0;
-                    transition: opacity 0.5s ease;
-                    pointer-events: none;
-                `;
-                card.appendChild(glow);
-                return glow;
-            }
-            return card.querySelector('.card-glow');
-        }
-        
-        // Enhanced flip function with smooth animation
-        function flipCard() {
-            if (isAnimating) return;
+        function initFlipCard() {
+            const card = document.querySelector('.flip-card');
+            if (!card) return;
             
-            isAnimating = true;
-            isFlipped = !isFlipped;
+            const inner = card.querySelector('.flip-card-inner');
+            let isAnimating = false;
+            let isFlipped = false;
             
-            // Cancel any pending animation frame
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
+            // Check if this card is from downloaded file (has inline transform)
+            const currentTransform = inner.style.transform;
+            if (currentTransform && currentTransform.includes('180deg')) {
+                isFlipped = true;
             }
             
-            // Add glow effect
-            const glow = addGlowEffect();
-            glow.style.opacity = '0.7';
-            
-            // Add sound effect (optional - could be disabled for accessibility)
-            playFlipSound();
-            
-            // Remove hover particles if they exist
-            const particles = card.querySelector('.floating-particles');
-            if (particles) {
-                particles.style.opacity = '0';
-                setTimeout(() => particles.remove(), 500);
-            }
-            
-            // Use requestAnimationFrame for smooth animation
-            let startTime = null;
-            const duration = 800; // ms
-            const startRotation = isFlipped ? 0 : 180;
-            const endRotation = isFlipped ? 180 : 0;
-            
-            function animate(time) {
-                if (!startTime) startTime = time;
-                const elapsed = time - startTime;
-                const progress = Math.min(elapsed / duration, 1);
+            // Simple flip function
+            function flipCard() {
+                if (isAnimating) return;
                 
-                // Easing function for smooth animation
-                const easeInOutCubic = progress < 0.5 
-                    ? 4 * progress * progress * progress
-                    : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+                isAnimating = true;
+                isFlipped = !isFlipped;
                 
-                const currentRotation = startRotation + (endRotation - startRotation) * easeInOutCubic;
-                inner.style.transform = `rotateY(${currentRotation}deg)`;
+                // Remove hover transform if exists
+                card.style.removeProperty('transform');
                 
-                // Add scale effect during animation
-                if (progress < 0.5) {
-                    const scale = 1 + 0.05 * Math.sin(progress * Math.PI);
-                    inner.style.transform += ` scale(${scale})`;
-                }
+                // Add flip animation class for smooth transition
+                inner.classList.add('flip-animating');
                 
-                // Add slight perspective change for 3D effect
-                card.style.perspective = `${1500 + Math.sin(progress * Math.PI) * 500}px`;
+                // Apply flip transform
+                inner.style.transform = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
                 
-                if (progress < 1) {
-                    animationFrameId = requestAnimationFrame(animate);
-                } else {
-                    // Animation complete
-                    card.style.perspective = '1500px';
-                    inner.style.transform = `rotateY(${endRotation}deg)`;
-                    glow.style.opacity = '0';
+                // Animation complete
+                setTimeout(() => {
+                    inner.classList.remove('flip-animating');
+                    isAnimating = false;
                     
-                    // Add particles to back side when flipped
-                    if (isFlipped) {
-                        setTimeout(() => {
-                            createFloatingParticles();
-                        }, 300);
-                    }
-                    
-                    // Update ARIA label for screen readers
-                    const frontText = inner.querySelector('.flip-card-front')?.textContent || 'Front of card';
-                    const backTitle = inner.querySelector('.birthday-text')?.textContent || 'Back of card';
-                    
-                    card.setAttribute('aria-label', 
-                        isFlipped 
-                            ? `Card flipped to back: ${backTitle}`
-                            : `Card flipped to front: ${frontText}`
-                    );
-                    
-                    // Dispatch custom event
+                    // Dispatch event for other scripts
                     card.dispatchEvent(new CustomEvent('cardFlipped', {
                         detail: { isFlipped: isFlipped }
                     }));
-                    
-                    isAnimating = false;
-                    animationFrameId = null;
-                }
+                }, 600); // Match CSS transition duration
             }
             
-            animationFrameId = requestAnimationFrame(animate);
-        }
-        
-        // Sound effect for flip (optional, can be muted)
-        function playFlipSound() {
-            try {
-                // Check if sound is enabled
-                if (localStorage.getItem('cardSoundEnabled') !== 'false') {
-                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    
-                    oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
-                    oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
-                    
-                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
-                    
-                    oscillator.start(audioContext.currentTime);
-                    oscillator.stop(audioContext.currentTime + 0.4);
-                    
-                    // Auto cleanup
-                    setTimeout(() => {
-                        oscillator.disconnect();
-                        gainNode.disconnect();
-                    }, 500);
-                }
-            } catch (error) {
-                // Audio not supported or blocked - silent fail
-            }
-        }
-        
-        // Add hover effect with slight tilt
-        function setupHoverEffect() {
-            let mouseX = 0;
-            let mouseY = 0;
-            let targetX = 0;
-            let targetY = 0;
-            let rafId = null;
+            // Add click handler - but check if it conflicts with existing handlers
+            let hasExistingClick = false;
+            const oldClick = card.onclick;
+            if (oldClick) hasExistingClick = true;
             
-            function handleMouseMove(e) {
-                const rect = card.getBoundingClientRect();
-                mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 40; // -20 to 20
-                mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 40;
-            }
-            
-            function animateTilt() {
-                // Smooth interpolation
-                targetX += (mouseX - targetX) * 0.1;
-                targetY += (mouseY - targetY) * 0.1;
-                
-                if (!isFlipped) {
-                    inner.style.transform = `rotateY(${isFlipped ? 180 : 0}deg) rotateX(${targetY * 0.5}deg) rotateY(${targetX * -0.5}deg)`;
+            // Use event delegation to avoid conflicts
+            card.addEventListener('click', function(e) {
+                // Don't flip if clicking on links or buttons
+                if (e.target.closest('a') || e.target.closest('button')) {
+                    return;
                 }
                 
-                // Add shadow movement
-                card.style.boxShadow = `
-                    ${targetX * 0.5}px ${targetY * 0.5}px 60px rgba(0,0,0,0.3),
-                    0 0 0 1px rgba(255,255,255,0.1) inset
-                `;
-                
-                rafId = requestAnimationFrame(animateTilt);
-            }
-            
-            function handleMouseEnter() {
-                card.addEventListener('mousemove', handleMouseMove);
-                rafId = requestAnimationFrame(animateTilt);
-                
-                // Create floating particles on hover
-                if (!isFlipped && !card.querySelector('.floating-particles')) {
-                    createFloatingParticles();
+                // Check if this is the card front/back (not other elements)
+                if (e.target === card || 
+                    e.target === inner || 
+                    e.target.classList.contains('flip-card-front') || 
+                    e.target.classList.contains('flip-card-back')) {
+                    
+                    flipCard();
+                    e.stopPropagation();
                 }
-            }
+            });
             
-            function handleMouseLeave() {
-                card.removeEventListener('mousemove', handleMouseMove);
-                if (rafId) {
-                    cancelAnimationFrame(rafId);
-                    rafId = null;
-                }
-                
-                // Reset transform
-                setTimeout(() => {
-                    if (!isAnimating) {
-                        inner.style.transform = `rotateY(${isFlipped ? 180 : 0}deg)`;
-                        card.style.boxShadow = `
-                            0 20px 60px rgba(0,0,0,0.3),
-                            0 0 0 1px rgba(255,255,255,0.1) inset
-                        `;
-                    }
-                }, 100);
-                
-                // Fade out particles
-                const particles = card.querySelector('.floating-particles');
-                if (particles) {
-                    particles.style.opacity = '0';
-                    setTimeout(() => {
-                        if (particles.parentNode) particles.remove();
-                    }, 300);
-                }
-            }
-            
-            card.addEventListener('mouseenter', handleMouseEnter);
-            card.addEventListener('mouseleave', handleMouseLeave);
-            
-            // Cleanup function
-            return () => {
-                card.removeEventListener('mouseenter', handleMouseEnter);
-                card.removeEventListener('mouseleave', handleMouseLeave);
-                card.removeEventListener('mousemove', handleMouseMove);
-                if (rafId) cancelAnimationFrame(rafId);
-            };
-        }
-        
-        // Add keyboard accessibility
-        function setupKeyboardAccessibility() {
+            // Add keyboard support
             card.setAttribute('tabindex', '0');
             card.setAttribute('role', 'button');
-            card.setAttribute('aria-label', 'Interactive birthday card. Click or press Enter to flip');
-            
-            card.addEventListener('keydown', (e) => {
+            card.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     flipCard();
                 }
             });
             
-            // Touch device support
-            let touchStartX = 0;
-            let touchStartTime = 0;
+            // Touch support for mobile
+            card.addEventListener('touchstart', function(e) {
+                // Just prevent default, flip will happen on click
+                e.stopPropagation();
+            }, { passive: true });
             
-            card.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
-                touchStartTime = Date.now();
-                e.preventDefault();
-            }, { passive: false });
-            
-            card.addEventListener('touchend', (e) => {
-                const touchEndX = e.changedTouches[0].clientX;
-                const touchEndTime = Date.now();
-                const swipeDistance = Math.abs(touchEndX - touchStartX);
-                const swipeTime = touchEndTime - touchStartTime;
-                
-                // Swipe detection
-                if (swipeDistance > 50 && swipeTime < 300) {
-                    flipCard();
-                }
-                e.preventDefault();
-            }, { passive: false });
-        }
-        
-        // Initialize everything
-        function init() {
-            // Add hover effect
-            const cleanupHover = setupHoverEffect();
-            
-            // Add accessibility
-            setupKeyboardAccessibility();
-            
-            // Click to flip
-            card.addEventListener('click', (e) => {
-                // Don't flip if clicking on interactive elements inside
-                if (e.target.closest('a') || e.target.closest('button')) {
-                    return;
-                }
-                flipCard();
-            });
-            
-            // Add CSS for 3D effect
-            if (!document.querySelector('#card-3d-styles')) {
+            // Add CSS for the animation if not present
+            if (!document.querySelector('#flip-card-styles')) {
                 const style = document.createElement('style');
-                style.id = 'card-3d-styles';
+                style.id = 'flip-card-styles';
                 style.textContent = `
-                    .flip-card {
-                        transition: perspective 0.5s ease-out;
+                    .flip-animating {
+                        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
                     }
                     .flip-card:focus {
                         outline: 2px solid rgba(255,255,255,0.5);
                         outline-offset: 4px;
-                        border-radius: 24px;
                     }
                     .flip-card:focus:not(:focus-visible) {
                         outline: none;
@@ -779,20 +514,10 @@ fetch("https://aa0105-lib.pages.dev/json-lib/cloud-greeting-card.json").then(e=>
                 document.head.appendChild(style);
             }
             
-            // Cleanup on page unload
-            window.addEventListener('beforeunload', () => {
-                cleanupHover?.();
-                if (animationFrameId) {
-                    cancelAnimationFrame(animationFrameId);
-                }
-            });
-        }
-        
-        // Start when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
+            // Dispatch ready event
+            card.dispatchEvent(new CustomEvent('flipCardReady', {
+                detail: { isFlipped: isFlipped }
+            }));
         }
     })();
 </script>
@@ -800,4 +525,5 @@ fetch("https://aa0105-lib.pages.dev/json-lib/cloud-greeting-card.json").then(e=>
 </html>`,c=new Blob([d],{type:"text/html"}),m=document.createElement("a");m.href=URL.createObjectURL(c),m.download="birthday_card.html",document.body.appendChild(m),m.click(),document.body.removeChild(m),URL.revokeObjectURL(m.href),showTemporaryMessage("Card downloaded successfully!","success")}catch(g){console.error("Error downloading card:",g),showTemporaryMessage("Error downloading card","error")}}function escapeHtml(e){return e?e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"):""}function addConfetti(){let e=["#FF5252","#FF4081","#E040FB","#7C4DFF","#536DFE","#448AFF","#40C4FF","#18FFFF","#64FFDA","#69F0AE"];document.querySelectorAll(".confetti").forEach(e=>e.remove());for(let t=0;t<150;t++)setTimeout(()=>{let t=document.createElement("div");t.className="confetti",t.style.left=100*Math.random()+"vw",t.style.backgroundColor=e[Math.floor(Math.random()*e.length)],t.style.width=15*Math.random()+5+"px",t.style.height=15*Math.random()+5+"px",t.style.borderRadius=Math.random()>.5?"50%":"0",t.style.animationDuration=3*Math.random()+2+"s",t.style.animationDelay=1*Math.random()+"s",document.body.appendChild(t),setTimeout(()=>{t.parentNode&&t.remove()},6e3)},10*t);showTemporaryMessage("Confetti added! \uD83C\uDF89","success")}function showTemporaryMessage(e,t="info"){document.querySelectorAll(".success-message").forEach(e=>e.remove());let a=document.createElement("div");a.className="success-message",a.style.backgroundColor="success"===t?"#4CAF50":"error"===t?"#F44336":"#2196F3",a.innerHTML=`
     <i class="${"success"===t?"fas fa-check-circle":"error"===t?"fas fa-exclamation-circle":"fas fa-info-circle"}"></i>
     <span>${e}</span>
+
   `,document.body.appendChild(a),setTimeout(()=>{a.parentNode&&a.remove()},3e3)}function saveToLocalStorage(){try{let e={frontMessage:document.getElementById("frontInput").value,imageUrl:document.getElementById("imageUrl").value,backTitle:document.getElementById("backTitle").value,backMessage:document.getElementById("backInput").value,instagram:document.getElementById("instagram").value,facebook:document.getElementById("facebook").value,twitter:document.getElementById("twitter").value,youtube:document.getElementById("youtube").value,selectedEmojis:selectedEmojis,timestamp:new Date().toISOString()};localStorage.setItem("birthdayCardData",JSON.stringify(e))}catch(t){console.error("Local storage error:",t)}}function loadFromLocalStorage(){try{let e=localStorage.getItem("birthdayCardData");if(e){let t=JSON.parse(e);t.frontMessage&&(document.getElementById("frontInput").value=t.frontMessage),t.imageUrl&&(document.getElementById("imageUrl").value=t.imageUrl),t.backTitle&&(document.getElementById("backTitle").value=t.backTitle),t.backMessage&&(document.getElementById("backInput").value=t.backMessage),t.instagram&&(document.getElementById("instagram").value=t.instagram),t.facebook&&(document.getElementById("facebook").value=t.facebook),t.twitter&&(document.getElementById("twitter").value=t.twitter),t.youtube&&(document.getElementById("youtube").value=t.youtube),t.selectedEmojis&&Array.isArray(t.selectedEmojis)&&(selectedEmojis=t.selectedEmojis,updateSelectedEmojisDisplay(),document.querySelectorAll(".emoji-option").forEach(e=>{let t=e.dataset.emoji;selectedEmojis.includes(t)?e.classList.add("selected"):e.classList.remove("selected")}))}}catch(a){console.error("Error loading saved data:",a)}}function setupAutoSave(){["frontInput","imageUrl","backTitle","backInput","instagram","facebook","twitter","youtube"].forEach(e=>{let t=document.getElementById(e);t&&t.addEventListener("input",()=>{saveToLocalStorage()})})}async function uploadImage(){let e=document.createElement("input");e.type="file",e.accept="image/*,.jpg,.jpeg,.png,.gif,.webp",e.onchange=async e=>{let t=e.target.files[0];if(!t)return;if(t.size>10485760){showTemporaryMessage("File size must be less than 10MB","error");return}if(!["image/jpeg","image/png","image/gif","image/webp"].includes(t.type)){showTemporaryMessage("Please select a valid image file (JPEG, PNG, GIF, WebP)","error");return}let a=document.getElementById("uploadProgress"),r=document.getElementById("progressFill"),l=document.getElementById("progressText");a.style.display="block";let o=new FormData;o.append("file",t),o.append("upload_preset",CLOUDINARY_CONFIG.uploadPreset),o.append("api_key",CLOUDINARY_CONFIG.apiKey);try{showTemporaryMessage("Uploading image...","info");let i=await fetch(CLOUDINARY_CONFIG.apiUrl,{method:"POST",body:o});if(!i.ok)throw Error(`Upload failed: ${i.status}`);let s=await i.json();if(s.secure_url)document.getElementById("imageUrl").value=s.secure_url,updateCard(),showTemporaryMessage("Image uploaded successfully!","success");else throw Error("Upload failed: No URL returned")}catch(n){console.error("Upload error:",n),showTemporaryMessage("Upload failed. Please try again.","error")}finally{setTimeout(()=>{a.style.display="none",r.style.width="0%",l.textContent="0%"},2e3)}},e.click()}function generateShareableURL(){if(!validateInputs()){showTemporaryMessage("Please fix errors before generating URL","error");return}try{let e={frontMessage:document.getElementById("frontInput").value,imageUrl:document.getElementById("imageUrl").value.trim()||"https://i.imgur.com/JqYeYn7.jpg",backTitle:document.getElementById("backTitle").value,backMessage:document.getElementById("backInput").value,instagram:document.getElementById("instagram").value.trim(),facebook:document.getElementById("facebook").value.trim(),twitter:document.getElementById("twitter").value.trim(),youtube:document.getElementById("youtube").value.trim(),selectedEmojis:selectedEmojis,timestamp:Date.now(),version:"1.0"},t=JSON.stringify(e),a,r=`${window.location.origin+window.location.pathname}?card=${btoa(encodeURIComponent(t))}`,l=document.getElementById("shareableUrl"),o=document.getElementById("generatedUrlContainer");l.value=r,o.style.display="block",o.scrollIntoView({behavior:"smooth",block:"center"}),showTemporaryMessage("Shareable URL generated!","success")}catch(i){console.error("Error generating URL:",i),showTemporaryMessage("Error generating URL","error")}}function copyShareUrl(){let e=document.getElementById("shareableUrl");if(!e.value){showTemporaryMessage("No URL to copy","error");return}e.select(),e.setSelectionRange(0,99999),navigator.clipboard.writeText(e.value).then(()=>{showTemporaryMessage("URL copied to clipboard!","success")}).catch(e=>{console.error("Copy failed:",e);try{document.execCommand("copy"),showTemporaryMessage("URL copied to clipboard!","success")}catch(t){showTemporaryMessage("Failed to copy URL","error")}})}function testShareUrl(){let e=document.getElementById("shareableUrl").value;e&&window.open(e,"_blank","noopener,noreferrer")}function loadCardFromURL(){let e=new URLSearchParams(window.location.search).get("card");if(e)try{let t=decodeURIComponent(atob(e)),a=JSON.parse(t);if(a.frontMessage&&(document.getElementById("frontInput").value=a.frontMessage),a.imageUrl&&(document.getElementById("imageUrl").value=a.imageUrl),a.backTitle&&(document.getElementById("backTitle").value=a.backTitle),a.backMessage&&(document.getElementById("backInput").value=a.backMessage),a.instagram&&(document.getElementById("instagram").value=a.instagram),a.facebook&&(document.getElementById("facebook").value=a.facebook),a.twitter&&(document.getElementById("twitter").value=a.twitter),a.youtube&&(document.getElementById("youtube").value=a.youtube),a.selectedEmojis&&Array.isArray(a.selectedEmojis)&&(selectedEmojis=a.selectedEmojis,updateSelectedEmojisDisplay(),document.querySelectorAll(".emoji-option").forEach(e=>{let t=e.dataset.emoji;selectedEmojis.includes(t)?e.classList.add("selected"):e.classList.remove("selected")})),updateCard(),history.replaceState){let r=window.location.pathname;history.replaceState(null,"",r)}showTemporaryMessage("Card loaded from URL!","success")}catch(l){console.error("Error loading card from URL:",l),showTemporaryMessage("Error loading card from URL","error")}}document.addEventListener("DOMContentLoaded",function(){initializeApp()});
