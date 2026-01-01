@@ -1,4 +1,393 @@
-fetch("https://aa0105-lib.pages.dev/json-lib/cloud-greeting-card.json").then(e=>e.json()).then(e=>{let t=new FormData;t.append("file",imageFile),t.append("upload_preset",e.uploadPreset),fetch(e.apiUrl,{method:"POST",body:t}).then(e=>e.json()).then(e=>{console.log("Image URL:",e.secure_url)})});let selectedEmojis=["\uD83C\uDF89","\uD83C\uDF82","\uD83C\uDF88","\uD83C\uDF81","✨"],isFlipping=!1;function initializeApp(){let e=document.getElementById("mobileMenuBtn"),t=document.getElementById("navLinks");e&&t&&e.addEventListener("click",function(){t.classList.toggle("active")}),initializeEmojiSelection(),loadFromLocalStorage(),loadCardFromURL(),updateCard(),setupAutoSave(),setupCardInteraction()}function initializeEmojiSelection(){document.querySelectorAll(".emoji-option").forEach(e=>{let t=e.dataset.emoji;selectedEmojis.includes(t)&&e.classList.add("selected"),e.addEventListener("click",function(){toggleEmoji(t,this)})}),updateSelectedEmojisDisplay()}function toggleEmoji(e,t){let a=selectedEmojis.indexOf(e);-1===a?(selectedEmojis.push(e),t.classList.add("selected")):(selectedEmojis.splice(a,1),t.classList.remove("selected")),updateSelectedEmojisDisplay(),saveToLocalStorage()}function updateSelectedEmojisDisplay(){let e=document.getElementById("selectedEmojis");e&&(selectedEmojis.length>0?e.innerHTML=`<p>Selected emojis: ${selectedEmojis.join(" ")}</p>`:e.innerHTML="<p>No emojis selected. Click emojis above to select.</p>")}function setupCardInteraction(){let e=document.getElementById("flipCard");e&&e.addEventListener("click",function(){this.classList.toggle("flipped"),this.classList.contains("flipped")&&showRandomEmojis()})}function showRandomEmojis(){if(0===selectedEmojis.length||isFlipping)return;isFlipping=!0;let e=Math.floor(3*Math.random())+3;for(let t=0;t<e;t++)setTimeout(()=>{createFloatingEmoji(selectedEmojis[Math.floor(Math.random()*selectedEmojis.length)])},200*t);setTimeout(()=>{isFlipping=!1},1e3)}function createFloatingEmoji(e){let t=document.createElement("div");t.className="random-emoji",t.textContent=e,t.style.left=80*Math.random()+10+"%",t.style.top=80*Math.random()+10+"%",t.style.color=getRandomColor(),t.style.fontSize=20*Math.random()+40+"px",document.body.appendChild(t),setTimeout(()=>{t.remove()},2e3)}function getRandomColor(){let e=["#FF5252","#FF4081","#E040FB","#7C4DFF","#536DFE","#448AFF","#40C4FF","#18FFFF","#64FFDA","#69F0AE","#B2FF59","#EEFF41","#FFFF00","#FFD740","#FFAB40"];return e[Math.floor(Math.random()*e.length)]}function isValidUrl(e){if(!e||""===e.trim())return!0;try{return new URL(e),!0}catch(t){return!1}}function showError(e,t){let a=document.getElementById(e);return!a||(a.textContent=t,a.style.display="block",!1)}function hideError(e){let t=document.getElementById(e);return t&&(t.style.display="none"),!0}function validateInputs(){let e=!0,t=document.getElementById("frontInput");t.value.trim()?(hideError("frontError"),t.classList.remove("has-error")):(e=showError("frontError","Front message is required")&&e,t.classList.add("has-error"));let a=document.getElementById("imageUrl").value.trim();a&&!isValidUrl(a)?(e=showError("imageError","Please enter a valid URL")&&e,document.getElementById("imageUrl").classList.add("has-error")):(hideError("imageError"),document.getElementById("imageUrl").classList.remove("has-error"));let r=document.getElementById("backTitle");r.value.trim()?(hideError("titleError"),r.classList.remove("has-error")):(e=showError("titleError","Back title is required")&&e,r.classList.add("has-error"));let l=document.getElementById("backInput");l.value.trim()?(hideError("messageError"),l.classList.remove("has-error")):(e=showError("messageError","Back message is required")&&e,l.classList.add("has-error"));let o=!1;for(let i of["instagram","facebook","twitter","youtube"]){let s=document.getElementById(i),n=s.value.trim();n&&!isValidUrl(n)?(o=!0,s.classList.add("has-error")):s.classList.remove("has-error")}return o?e=showError("socialError","Please enter valid URLs for social media")&&e:hideError("socialError"),e}function updateCard(){if(!validateInputs()){showTemporaryMessage("Please fix errors before updating","error");return}try{let e=document.getElementById("frontInput").value;document.getElementById("frontMessage").innerText=e;let t=document.getElementById("imageUrl").value.trim()||"https://i.imgur.com/JqYeYn7.jpg",a=document.getElementById("profileImage");a.classList.add("loading");let r=new Image;r.onload=function(){a.src=t,a.classList.remove("loading")},r.onerror=function(){a.src="https://i.imgur.com/JqYeYn7.jpg",a.classList.remove("loading"),showTemporaryMessage("Could not load image. Using default.","error")},r.src=t;let l=document.getElementById("backTitle").value;document.getElementById("birthdayText").innerText=l;let o=document.getElementById("backInput").value;document.getElementById("backText").innerHTML=o.replace(/\n/g,"<br>"),updateSocialLinks(),saveToLocalStorage(),showTemporaryMessage("Card updated successfully!","success")}catch(i){console.error("Error updating card:",i),showTemporaryMessage("Error updating card","error")}}function updateSocialLinks(){let e=document.getElementById("instagram").value.trim(),t=document.getElementById("facebook").value.trim(),a=document.getElementById("twitter").value.trim(),r=document.getElementById("youtube").value.trim(),l=document.getElementById("socialIcons");l.innerHTML="",[{url:e,icon:"fab fa-instagram",label:"Instagram"},{url:t,icon:"fab fa-facebook",label:"Facebook"},{url:a,icon:"fab fa-twitter",label:"Twitter"},{url:r,icon:"fab fa-youtube",label:"YouTube"}].forEach(e=>{if(e.url){let t=document.createElement("a");t.href=e.url,t.target="_blank",t.rel="noopener noreferrer",t.setAttribute("aria-label",e.label);let a=document.createElement("i");a.className=e.icon,t.appendChild(a),l.appendChild(t)}}),0===l.children.length&&(l.innerHTML='<p style="color:#666; font-style:italic;">No social links added</p>')}function downloadCard(){if(!validateInputs()){showTemporaryMessage("Please fix errors before downloading","error");return}try{let e=document.getElementById("frontInput").value,t=document.getElementById("imageUrl").value.trim()||"https://i.imgur.com/JqYeYn7.jpg",a=document.getElementById("backTitle").value,r=document.getElementById("backInput").value.replace(/\n/g,"<br>"),l=document.getElementById("instagram").value.trim(),o=document.getElementById("facebook").value.trim(),i=document.getElementById("twitter").value.trim(),s=document.getElementById("youtube").value.trim(),n="";l&&(n+=`<a href="${escapeHtml(l)}" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>`),o&&(n+=`<a href="${escapeHtml(o)}" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>`),i&&(n+=`<a href="${escapeHtml(i)}" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>`),s&&(n+=`<a href="${escapeHtml(s)}" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>`);let d=`<!DOCTYPE html>
+fetch('https://aa0105-lib.pages.dev/json-lib/cloud-greeting-card.json')
+  .then(res => res.json())
+  .then(config => {
+    const formData = new FormData();
+    formData.append('file', imageFile);
+    formData.append('upload_preset', config.uploadPreset);
+
+    fetch(config.apiUrl, {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('Image URL:', data.secure_url);
+    });
+  });
+
+
+// State variables
+let selectedEmojis = ['🎉', '🎂', '🎈', '🎁', '✨'];
+let isFlipping = false;
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+  initializeApp();
+});
+
+function initializeApp() {
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const navLinks = document.getElementById('navLinks');
+  
+  if (mobileMenuBtn && navLinks) {
+    mobileMenuBtn.addEventListener('click', function() {
+      navLinks.classList.toggle('active');
+    });
+  }
+
+  // Initialize emoji selection
+  initializeEmojiSelection();
+  
+  // Load saved data
+  loadFromLocalStorage();
+  
+  // Load from URL parameters if present
+  loadCardFromURL();
+  
+  // Initialize card
+  updateCard();
+  
+  // Set up auto-save
+  setupAutoSave();
+  
+  // Set up card click handler
+  setupCardInteraction();
+}
+
+// Initialize emoji selection
+function initializeEmojiSelection() {
+  const emojiOptions = document.querySelectorAll('.emoji-option');
+  
+  emojiOptions.forEach(option => {
+    const emoji = option.dataset.emoji;
+    
+    // Set initial selection state
+    if (selectedEmojis.includes(emoji)) {
+      option.classList.add('selected');
+    }
+    
+    // Add click handler
+    option.addEventListener('click', function() {
+      toggleEmoji(emoji, this);
+    });
+  });
+  
+  updateSelectedEmojisDisplay();
+}
+
+// Toggle emoji selection
+function toggleEmoji(emoji, element) {
+  const index = selectedEmojis.indexOf(emoji);
+  
+  if (index === -1) {
+    selectedEmojis.push(emoji);
+    element.classList.add('selected');
+  } else {
+    selectedEmojis.splice(index, 1);
+    element.classList.remove('selected');
+  }
+  
+  updateSelectedEmojisDisplay();
+  saveToLocalStorage();
+}
+
+// Update selected emojis display
+function updateSelectedEmojisDisplay() {
+  const container = document.getElementById('selectedEmojis');
+  if (container) {
+    if (selectedEmojis.length > 0) {
+      container.innerHTML = `<p>Selected emojis: ${selectedEmojis.join(' ')}</p>`;
+    } else {
+      container.innerHTML = '<p>No emojis selected. Click emojis above to select.</p>';
+    }
+  }
+}
+
+// Set up card interaction
+function setupCardInteraction() {
+  const flipCard = document.getElementById('flipCard');
+  if (flipCard) {
+    flipCard.addEventListener('click', function() {
+      this.classList.toggle('flipped');
+      
+      // Only show random emojis when flipping to back
+      if (this.classList.contains('flipped')) {
+        showRandomEmojis();
+      }
+    });
+  }
+}
+
+// Show random emojis
+function showRandomEmojis() {
+  if (selectedEmojis.length === 0 || isFlipping) return;
+  
+  isFlipping = true;
+  
+  // Create 3-5 random emojis
+  const emojiCount = Math.floor(Math.random() * 3) + 3;
+  
+  for (let i = 0; i < emojiCount; i++) {
+    setTimeout(() => {
+      const emoji = selectedEmojis[Math.floor(Math.random() * selectedEmojis.length)];
+      createFloatingEmoji(emoji);
+    }, i * 200);
+  }
+  
+  setTimeout(() => {
+    isFlipping = false;
+  }, 1000);
+}
+
+// Create floating emoji element
+function createFloatingEmoji(emoji) {
+  const emojiElement = document.createElement('div');
+  emojiElement.className = 'random-emoji';
+  emojiElement.textContent = emoji;
+  emojiElement.style.left = Math.random() * 80 + 10 + '%';
+  emojiElement.style.top = Math.random() * 80 + 10 + '%';
+  emojiElement.style.color = getRandomColor();
+  emojiElement.style.fontSize = Math.random() * 20 + 40 + 'px';
+  
+  document.body.appendChild(emojiElement);
+  
+  // Remove after animation
+  setTimeout(() => {
+    emojiElement.remove();
+  }, 2000);
+}
+
+// Get random color
+function getRandomColor() {
+  const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', 
+                  '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE',
+                  '#B2FF59', '#EEFF41', '#FFFF00', '#FFD740', '#FFAB40'];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Validate URL format
+function isValidUrl(url) {
+  if (!url || url.trim() === '') return true; // Empty is valid (optional)
+  
+  try {
+    // Try to create a URL object
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+// Show error message
+function showError(elementId, message) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.textContent = message;
+    element.style.display = 'block';
+    return false;
+  }
+  return true;
+}
+
+// Hide error message
+function hideError(elementId) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.style.display = 'none';
+  }
+  return true;
+}
+
+// Validate all inputs
+function validateInputs() {
+  let isValid = true;
+  
+  // Front message validation
+  const frontInput = document.getElementById('frontInput');
+  if (!frontInput.value.trim()) {
+    isValid = showError('frontError', 'Front message is required') && isValid;
+    frontInput.classList.add('has-error');
+  } else {
+    hideError('frontError');
+    frontInput.classList.remove('has-error');
+  }
+  
+  // Image URL validation
+  const imageUrl = document.getElementById('imageUrl').value.trim();
+  if (imageUrl && !isValidUrl(imageUrl)) {
+    isValid = showError('imageError', 'Please enter a valid URL') && isValid;
+    document.getElementById('imageUrl').classList.add('has-error');
+  } else {
+    hideError('imageError');
+    document.getElementById('imageUrl').classList.remove('has-error');
+  }
+  
+  // Back title validation
+  const backTitle = document.getElementById('backTitle');
+  if (!backTitle.value.trim()) {
+    isValid = showError('titleError', 'Back title is required') && isValid;
+    backTitle.classList.add('has-error');
+  } else {
+    hideError('titleError');
+    backTitle.classList.remove('has-error');
+  }
+  
+  // Back message validation
+  const backInput = document.getElementById('backInput');
+  if (!backInput.value.trim()) {
+    isValid = showError('messageError', 'Back message is required') && isValid;
+    backInput.classList.add('has-error');
+  } else {
+    hideError('messageError');
+    backInput.classList.remove('has-error');
+  }
+  
+  // Social media links validation
+  const socialInputs = ['instagram', 'facebook', 'twitter', 'youtube'];
+  let socialError = false;
+  
+  for (const inputId of socialInputs) {
+    const input = document.getElementById(inputId);
+    const url = input.value.trim();
+    if (url && !isValidUrl(url)) {
+      socialError = true;
+      input.classList.add('has-error');
+    } else {
+      input.classList.remove('has-error');
+    }
+  }
+  
+  if (socialError) {
+    isValid = showError('socialError', 'Please enter valid URLs for social media') && isValid;
+  } else {
+    hideError('socialError');
+  }
+  
+  return isValid;
+}
+
+// Update card with new content
+function updateCard() {
+  if (!validateInputs()) {
+    showTemporaryMessage('Please fix errors before updating', 'error');
+    return;
+  }
+  
+  try {
+    // Update front message
+    const frontMessage = document.getElementById('frontInput').value;
+    document.getElementById('frontMessage').innerText = frontMessage;
+    
+    // Update profile image
+    const imageUrl = document.getElementById('imageUrl').value.trim() || 'https://i.imgur.com/JqYeYn7.jpg';
+    const profileImage = document.getElementById('profileImage');
+    
+    // Add loading state
+    profileImage.classList.add('loading');
+    
+    // Preload image
+    const img = new Image();
+    img.onload = function() {
+      profileImage.src = imageUrl;
+      profileImage.classList.remove('loading');
+    };
+    
+    img.onerror = function() {
+      profileImage.src = 'https://i.imgur.com/JqYeYn7.jpg';
+      profileImage.classList.remove('loading');
+      showTemporaryMessage('Could not load image. Using default.', 'error');
+    };
+    
+    img.src = imageUrl;
+    
+    // Update back title
+    const backTitle = document.getElementById('backTitle').value;
+    document.getElementById('birthdayText').innerText = backTitle;
+    
+    // Update back message
+    const backMessage = document.getElementById('backInput').value;
+    document.getElementById('backText').innerHTML = backMessage.replace(/\n/g, '<br>');
+    
+    // Update social media links
+    updateSocialLinks();
+    
+    // Save to local storage
+    saveToLocalStorage();
+    
+    // Show success message
+    showTemporaryMessage('Card updated successfully!', 'success');
+  } catch (error) {
+    console.error('Error updating card:', error);
+    showTemporaryMessage('Error updating card', 'error');
+  }
+}
+
+// Update social links
+function updateSocialLinks() {
+  const instagram = document.getElementById('instagram').value.trim();
+  const facebook = document.getElementById('facebook').value.trim();
+  const twitter = document.getElementById('twitter').value.trim();
+  const youtube = document.getElementById('youtube').value.trim();
+  
+  const socialIcons = document.getElementById('socialIcons');
+  socialIcons.innerHTML = '';
+  
+  const socialLinks = [
+    { url: instagram, icon: 'fab fa-instagram', label: 'Instagram' },
+    { url: facebook, icon: 'fab fa-facebook', label: 'Facebook' },
+    { url: twitter, icon: 'fab fa-twitter', label: 'Twitter' },
+    { url: youtube, icon: 'fab fa-youtube', label: 'YouTube' }
+  ];
+  
+  socialLinks.forEach(link => {
+    if (link.url) {
+      const a = document.createElement('a');
+      a.href = link.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.setAttribute('aria-label', link.label);
+      
+      const i = document.createElement('i');
+      i.className = link.icon;
+      
+      a.appendChild(i);
+      socialIcons.appendChild(a);
+    }
+  });
+  
+  // If no social links, show message
+  if (socialIcons.children.length === 0) {
+    socialIcons.innerHTML = '<p style="color:#666; font-style:italic;">No social links added</p>';
+  }
+}
+
+// Download card as HTML file
+function downloadCard() {
+  if (!validateInputs()) {
+    showTemporaryMessage('Please fix errors before downloading', 'error');
+    return;
+  }
+  
+  try {
+    const frontMessage = document.getElementById('frontInput').value;
+    const imageUrl = document.getElementById('imageUrl').value.trim() || 'https://i.imgur.com/JqYeYn7.jpg';
+    const backTitle = document.getElementById('backTitle').value;
+    const backMessage = document.getElementById('backInput').value.replace(/\n/g, '<br>');
+    
+    const instagram = document.getElementById('instagram').value.trim();
+    const facebook = document.getElementById('facebook').value.trim();
+    const twitter = document.getElementById('twitter').value.trim();
+    const youtube = document.getElementById('youtube').value.trim();
+    
+    // Generate social icons HTML
+    let socialIconsHTML = '';
+    if (instagram) socialIconsHTML += `<a href="${escapeHtml(instagram)}" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>`;
+    if (facebook) socialIconsHTML += `<a href="${escapeHtml(facebook)}" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>`;
+    if (twitter) socialIconsHTML += `<a href="${escapeHtml(twitter)}" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>`;
+    if (youtube) socialIconsHTML += `<a href="${escapeHtml(youtube)}" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>`;
+    
+    const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -389,141 +778,402 @@ fetch("https://aa0105-lib.pages.dev/json-lib/cloud-greeting-card.json").then(e=>
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    ${escapeHtml(e)}
+                    ${escapeHtml(frontMessage)}
                 </div>
                 <div class="flip-card-back">
-                    <img src="${escapeHtml(t)}" alt="Birthday Person" class="profile-image" onerror="this.src='https://i.imgur.com/JqYeYn7.jpg'">
-                    <div class="birthday-text">${escapeHtml(a)}</div>
-                    <div class="message">${r}</div>
-                    ${n?`<div class="social-icons">${n}</div>`:""}
+                    <img src="${escapeHtml(imageUrl)}" alt="Birthday Person" class="profile-image" onerror="this.src='https://i.imgur.com/JqYeYn7.jpg'">
+                    <div class="birthday-text">${escapeHtml(backTitle)}</div>
+                    <div class="message">${backMessage}</div>
+                    ${socialIconsHTML ? `<div class="social-icons">${socialIconsHTML}</div>` : ''}
                     <div class="footer-note">Made with ❤️ using GreetingCard Maker</div>
                 </div>
             </div>
         </div>
     </div>
     
-<script>
-    // Minimal enhanced flip functionality that doesn't conflict with existing code
-    (function() {
-        'use strict';
-        
-        // Wait for DOM to be fully loaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initFlipCard);
-        } else {
-            setTimeout(initFlipCard, 100); // Small delay to ensure other scripts run first
-        }
-        
-        function initFlipCard() {
-            const card = document.querySelector('.flip-card');
-            if (!card) return;
-            
-            const inner = card.querySelector('.flip-card-inner');
-            let isAnimating = false;
-            let isFlipped = false;
-            
-            // Check if this card is from downloaded file (has inline transform)
-            const currentTransform = inner.style.transform;
-            if (currentTransform && currentTransform.includes('180deg')) {
-                isFlipped = true;
-            }
-            
-            // Simple flip function
-            function flipCard() {
-                if (isAnimating) return;
-                
-                isAnimating = true;
-                isFlipped = !isFlipped;
-                
-                // Remove hover transform if exists
-                card.style.removeProperty('transform');
-                
-                // Add flip animation class for smooth transition
-                inner.classList.add('flip-animating');
-                
-                // Apply flip transform
-                inner.style.transform = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
-                
-                // Animation complete
-                setTimeout(() => {
-                    inner.classList.remove('flip-animating');
-                    isAnimating = false;
-                    
-                    // Dispatch event for other scripts
-                    card.dispatchEvent(new CustomEvent('cardFlipped', {
-                        detail: { isFlipped: isFlipped }
-                    }));
-                }, 600); // Match CSS transition duration
-            }
-            
-            // Add click handler - but check if it conflicts with existing handlers
-            let hasExistingClick = false;
-            const oldClick = card.onclick;
-            if (oldClick) hasExistingClick = true;
-            
-            // Use event delegation to avoid conflicts
-            card.addEventListener('click', function(e) {
-                // Don't flip if clicking on links or buttons
-                if (e.target.closest('a') || e.target.closest('button')) {
-                    return;
-                }
-                
-                // Check if this is the card front/back (not other elements)
-                if (e.target === card || 
-                    e.target === inner || 
-                    e.target.classList.contains('flip-card-front') || 
-                    e.target.classList.contains('flip-card-back')) {
-                    
-                    flipCard();
-                    e.stopPropagation();
-                }
-            });
-            
-            // Add keyboard support
-            card.setAttribute('tabindex', '0');
-            card.setAttribute('role', 'button');
-            card.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    flipCard();
-                }
-            });
-            
-            // Touch support for mobile
-            card.addEventListener('touchstart', function(e) {
-                // Just prevent default, flip will happen on click
-                e.stopPropagation();
-            }, { passive: true });
-            
-            // Add CSS for the animation if not present
-            if (!document.querySelector('#flip-card-styles')) {
-                const style = document.createElement('style');
-                style.id = 'flip-card-styles';
-                style.textContent = `
-                    .flip-animating {
-                        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
-                    }
-                    .flip-card:focus {
-                        outline: 2px solid rgba(255,255,255,0.5);
-                        outline-offset: 4px;
-                    }
-                    .flip-card:focus:not(:focus-visible) {
-                        outline: none;
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            // Dispatch ready event
-            card.dispatchEvent(new CustomEvent('flipCardReady', {
-                detail: { isFlipped: isFlipped }
-            }));
-        }
-    })();
-</script>
+    <script>
+        // Add flip functionality
+        document.querySelector('.flip-card').addEventListener('click', function() {
+            this.querySelector('.flip-card-inner').style.transform = 
+                this.querySelector('.flip-card-inner').style.transform === 'rotateY(180deg)' 
+                ? 'rotateY(0deg)' 
+                : 'rotateY(180deg)';
+        });
+    </script>
 </body>
-</html>`,c=new Blob([d],{type:"text/html"}),m=document.createElement("a");m.href=URL.createObjectURL(c),m.download="birthday_card.html",document.body.appendChild(m),m.click(),document.body.removeChild(m),URL.revokeObjectURL(m.href),showTemporaryMessage("Card downloaded successfully!","success")}catch(g){console.error("Error downloading card:",g),showTemporaryMessage("Error downloading card","error")}}function escapeHtml(e){return e?e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"):""}function addConfetti(){let e=["#FF5252","#FF4081","#E040FB","#7C4DFF","#536DFE","#448AFF","#40C4FF","#18FFFF","#64FFDA","#69F0AE"];document.querySelectorAll(".confetti").forEach(e=>e.remove());for(let t=0;t<150;t++)setTimeout(()=>{let t=document.createElement("div");t.className="confetti",t.style.left=100*Math.random()+"vw",t.style.backgroundColor=e[Math.floor(Math.random()*e.length)],t.style.width=15*Math.random()+5+"px",t.style.height=15*Math.random()+5+"px",t.style.borderRadius=Math.random()>.5?"50%":"0",t.style.animationDuration=3*Math.random()+2+"s",t.style.animationDelay=1*Math.random()+"s",document.body.appendChild(t),setTimeout(()=>{t.parentNode&&t.remove()},6e3)},10*t);showTemporaryMessage("Confetti added! \uD83C\uDF89","success")}function showTemporaryMessage(e,t="info"){document.querySelectorAll(".success-message").forEach(e=>e.remove());let a=document.createElement("div");a.className="success-message",a.style.backgroundColor="success"===t?"#4CAF50":"error"===t?"#F44336":"#2196F3",a.innerHTML=`
-    <i class="${"success"===t?"fas fa-check-circle":"error"===t?"fas fa-exclamation-circle":"fas fa-info-circle"}"></i>
-    <span>${e}</span>
+</html>`;
+    
+    const blob = new Blob([htmlContent], { type: "text/html" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "birthday_card.html";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+    
+    showTemporaryMessage('Card downloaded successfully!', 'success');
+  } catch (error) {
+    console.error('Error downloading card:', error);
+    showTemporaryMessage('Error downloading card', 'error');
+  }
+}
 
-  `,document.body.appendChild(a),setTimeout(()=>{a.parentNode&&a.remove()},3e3)}function saveToLocalStorage(){try{let e={frontMessage:document.getElementById("frontInput").value,imageUrl:document.getElementById("imageUrl").value,backTitle:document.getElementById("backTitle").value,backMessage:document.getElementById("backInput").value,instagram:document.getElementById("instagram").value,facebook:document.getElementById("facebook").value,twitter:document.getElementById("twitter").value,youtube:document.getElementById("youtube").value,selectedEmojis:selectedEmojis,timestamp:new Date().toISOString()};localStorage.setItem("birthdayCardData",JSON.stringify(e))}catch(t){console.error("Local storage error:",t)}}function loadFromLocalStorage(){try{let e=localStorage.getItem("birthdayCardData");if(e){let t=JSON.parse(e);t.frontMessage&&(document.getElementById("frontInput").value=t.frontMessage),t.imageUrl&&(document.getElementById("imageUrl").value=t.imageUrl),t.backTitle&&(document.getElementById("backTitle").value=t.backTitle),t.backMessage&&(document.getElementById("backInput").value=t.backMessage),t.instagram&&(document.getElementById("instagram").value=t.instagram),t.facebook&&(document.getElementById("facebook").value=t.facebook),t.twitter&&(document.getElementById("twitter").value=t.twitter),t.youtube&&(document.getElementById("youtube").value=t.youtube),t.selectedEmojis&&Array.isArray(t.selectedEmojis)&&(selectedEmojis=t.selectedEmojis,updateSelectedEmojisDisplay(),document.querySelectorAll(".emoji-option").forEach(e=>{let t=e.dataset.emoji;selectedEmojis.includes(t)?e.classList.add("selected"):e.classList.remove("selected")}))}}catch(a){console.error("Error loading saved data:",a)}}function setupAutoSave(){["frontInput","imageUrl","backTitle","backInput","instagram","facebook","twitter","youtube"].forEach(e=>{let t=document.getElementById(e);t&&t.addEventListener("input",()=>{saveToLocalStorage()})})}async function uploadImage(){let e=document.createElement("input");e.type="file",e.accept="image/*,.jpg,.jpeg,.png,.gif,.webp",e.onchange=async e=>{let t=e.target.files[0];if(!t)return;if(t.size>10485760){showTemporaryMessage("File size must be less than 10MB","error");return}if(!["image/jpeg","image/png","image/gif","image/webp"].includes(t.type)){showTemporaryMessage("Please select a valid image file (JPEG, PNG, GIF, WebP)","error");return}let a=document.getElementById("uploadProgress"),r=document.getElementById("progressFill"),l=document.getElementById("progressText");a.style.display="block";let o=new FormData;o.append("file",t),o.append("upload_preset",CLOUDINARY_CONFIG.uploadPreset),o.append("api_key",CLOUDINARY_CONFIG.apiKey);try{showTemporaryMessage("Uploading image...","info");let i=await fetch(CLOUDINARY_CONFIG.apiUrl,{method:"POST",body:o});if(!i.ok)throw Error(`Upload failed: ${i.status}`);let s=await i.json();if(s.secure_url)document.getElementById("imageUrl").value=s.secure_url,updateCard(),showTemporaryMessage("Image uploaded successfully!","success");else throw Error("Upload failed: No URL returned")}catch(n){console.error("Upload error:",n),showTemporaryMessage("Upload failed. Please try again.","error")}finally{setTimeout(()=>{a.style.display="none",r.style.width="0%",l.textContent="0%"},2e3)}},e.click()}function generateShareableURL(){if(!validateInputs()){showTemporaryMessage("Please fix errors before generating URL","error");return}try{let e={frontMessage:document.getElementById("frontInput").value,imageUrl:document.getElementById("imageUrl").value.trim()||"https://i.imgur.com/JqYeYn7.jpg",backTitle:document.getElementById("backTitle").value,backMessage:document.getElementById("backInput").value,instagram:document.getElementById("instagram").value.trim(),facebook:document.getElementById("facebook").value.trim(),twitter:document.getElementById("twitter").value.trim(),youtube:document.getElementById("youtube").value.trim(),selectedEmojis:selectedEmojis,timestamp:Date.now(),version:"1.0"},t=JSON.stringify(e),a,r=`${window.location.origin+window.location.pathname}?card=${btoa(encodeURIComponent(t))}`,l=document.getElementById("shareableUrl"),o=document.getElementById("generatedUrlContainer");l.value=r,o.style.display="block",o.scrollIntoView({behavior:"smooth",block:"center"}),showTemporaryMessage("Shareable URL generated!","success")}catch(i){console.error("Error generating URL:",i),showTemporaryMessage("Error generating URL","error")}}function copyShareUrl(){let e=document.getElementById("shareableUrl");if(!e.value){showTemporaryMessage("No URL to copy","error");return}e.select(),e.setSelectionRange(0,99999),navigator.clipboard.writeText(e.value).then(()=>{showTemporaryMessage("URL copied to clipboard!","success")}).catch(e=>{console.error("Copy failed:",e);try{document.execCommand("copy"),showTemporaryMessage("URL copied to clipboard!","success")}catch(t){showTemporaryMessage("Failed to copy URL","error")}})}function testShareUrl(){let e=document.getElementById("shareableUrl").value;e&&window.open(e,"_blank","noopener,noreferrer")}function loadCardFromURL(){let e=new URLSearchParams(window.location.search).get("card");if(e)try{let t=decodeURIComponent(atob(e)),a=JSON.parse(t);if(a.frontMessage&&(document.getElementById("frontInput").value=a.frontMessage),a.imageUrl&&(document.getElementById("imageUrl").value=a.imageUrl),a.backTitle&&(document.getElementById("backTitle").value=a.backTitle),a.backMessage&&(document.getElementById("backInput").value=a.backMessage),a.instagram&&(document.getElementById("instagram").value=a.instagram),a.facebook&&(document.getElementById("facebook").value=a.facebook),a.twitter&&(document.getElementById("twitter").value=a.twitter),a.youtube&&(document.getElementById("youtube").value=a.youtube),a.selectedEmojis&&Array.isArray(a.selectedEmojis)&&(selectedEmojis=a.selectedEmojis,updateSelectedEmojisDisplay(),document.querySelectorAll(".emoji-option").forEach(e=>{let t=e.dataset.emoji;selectedEmojis.includes(t)?e.classList.add("selected"):e.classList.remove("selected")})),updateCard(),history.replaceState){let r=window.location.pathname;history.replaceState(null,"",r)}showTemporaryMessage("Card loaded from URL!","success")}catch(l){console.error("Error loading card from URL:",l),showTemporaryMessage("Error loading card from URL","error")}}document.addEventListener("DOMContentLoaded",function(){initializeApp()});
+// Escape HTML to prevent XSS
+function escapeHtml(unsafe) {
+  if (!unsafe) return '';
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// Add confetti effect
+function addConfetti() {
+  const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', 
+                  '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE'];
+  
+  // Remove existing confetti
+  document.querySelectorAll('.confetti').forEach(el => el.remove());
+  
+  for (let i = 0; i < 150; i++) {
+    setTimeout(() => {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.width = Math.random() * 15 + 5 + 'px';
+      confetti.style.height = Math.random() * 15 + 5 + 'px';
+      confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+      confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+      confetti.style.animationDelay = Math.random() * 1 + 's';
+      
+      document.body.appendChild(confetti);
+      
+      // Remove confetti after animation completes
+      setTimeout(() => {
+        if (confetti.parentNode) {
+          confetti.remove();
+        }
+      }, 6000);
+    }, i * 10);
+  }
+  
+  showTemporaryMessage('Confetti added! 🎉', 'success');
+}
+
+// Show temporary message
+function showTemporaryMessage(message, type = 'info') {
+  // Remove existing messages
+  const existingMessages = document.querySelectorAll('.success-message');
+  existingMessages.forEach(msg => msg.remove());
+  
+  const messageElement = document.createElement('div');
+  messageElement.className = 'success-message';
+  messageElement.style.backgroundColor = type === 'success' ? '#4CAF50' : 
+                                        type === 'error' ? '#F44336' : '#2196F3';
+  
+  const icon = type === 'success' ? 'fas fa-check-circle' :
+               type === 'error' ? 'fas fa-exclamation-circle' :
+               'fas fa-info-circle';
+  
+  messageElement.innerHTML = `
+    <i class="${icon}"></i>
+    <span>${message}</span>
+  `;
+  
+  document.body.appendChild(messageElement);
+  
+  // Remove message after animation completes
+  setTimeout(() => {
+    if (messageElement.parentNode) {
+      messageElement.remove();
+    }
+  }, 3000);
+}
+
+// Save card data to local storage
+function saveToLocalStorage() {
+  try {
+    const cardData = {
+      frontMessage: document.getElementById('frontInput').value,
+      imageUrl: document.getElementById('imageUrl').value,
+      backTitle: document.getElementById('backTitle').value,
+      backMessage: document.getElementById('backInput').value,
+      instagram: document.getElementById('instagram').value,
+      facebook: document.getElementById('facebook').value,
+      twitter: document.getElementById('twitter').value,
+      youtube: document.getElementById('youtube').value,
+      selectedEmojis: selectedEmojis,
+      timestamp: new Date().toISOString()
+    };
+    
+    localStorage.setItem('birthdayCardData', JSON.stringify(cardData));
+  } catch (e) {
+    console.error('Local storage error:', e);
+  }
+}
+
+// Load card data from local storage
+function loadFromLocalStorage() {
+  try {
+    const savedData = localStorage.getItem('birthdayCardData');
+    if (savedData) {
+      const cardData = JSON.parse(savedData);
+      
+      // Restore form values
+      if (cardData.frontMessage) document.getElementById('frontInput').value = cardData.frontMessage;
+      if (cardData.imageUrl) document.getElementById('imageUrl').value = cardData.imageUrl;
+      if (cardData.backTitle) document.getElementById('backTitle').value = cardData.backTitle;
+      if (cardData.backMessage) document.getElementById('backInput').value = cardData.backMessage;
+      if (cardData.instagram) document.getElementById('instagram').value = cardData.instagram;
+      if (cardData.facebook) document.getElementById('facebook').value = cardData.facebook;
+      if (cardData.twitter) document.getElementById('twitter').value = cardData.twitter;
+      if (cardData.youtube) document.getElementById('youtube').value = cardData.youtube;
+      
+      // Restore selected emojis
+      if (cardData.selectedEmojis && Array.isArray(cardData.selectedEmojis)) {
+        selectedEmojis = cardData.selectedEmojis;
+        updateSelectedEmojisDisplay();
+        
+        // Update emoji options selection state
+        document.querySelectorAll('.emoji-option').forEach(option => {
+          const emoji = option.dataset.emoji;
+          if (selectedEmojis.includes(emoji)) {
+            option.classList.add('selected');
+          } else {
+            option.classList.remove('selected');
+          }
+        });
+      }
+    }
+  } catch (e) {
+    console.error('Error loading saved data:', e);
+  }
+}
+
+// Set up auto-save
+function setupAutoSave() {
+  const inputs = [
+    'frontInput', 'imageUrl', 'backTitle', 'backInput',
+    'instagram', 'facebook', 'twitter', 'youtube'
+  ];
+  
+  inputs.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.addEventListener('input', () => {
+        saveToLocalStorage();
+      });
+    }
+  });
+}
+
+// Upload image to Cloudinary
+async function uploadImage() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*,.jpg,.jpeg,.png,.gif,.webp';
+  
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    // Validate file size (max 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      showTemporaryMessage('File size must be less than 10MB', 'error');
+      return;
+    }
+    
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+      showTemporaryMessage('Please select a valid image file (JPEG, PNG, GIF, WebP)', 'error');
+      return;
+    }
+    
+    // Show progress
+    const progress = document.getElementById('uploadProgress');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    progress.style.display = 'block';
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_CONFIG.uploadPreset);
+    formData.append('api_key', CLOUDINARY_CONFIG.apiKey);
+    
+    try {
+      showTemporaryMessage('Uploading image...', 'info');
+      
+      const response = await fetch(CLOUDINARY_CONFIG.apiUrl, {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Upload failed: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.secure_url) {
+        // Update image URL input
+        document.getElementById('imageUrl').value = data.secure_url;
+        updateCard();
+        showTemporaryMessage('Image uploaded successfully!', 'success');
+      } else {
+        throw new Error('Upload failed: No URL returned');
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      showTemporaryMessage('Upload failed. Please try again.', 'error');
+    } finally {
+      setTimeout(() => {
+        progress.style.display = 'none';
+        progressFill.style.width = '0%';
+        progressText.textContent = '0%';
+      }, 2000);
+    }
+  };
+  
+  input.click();
+}
+
+// Generate shareable URL
+function generateShareableURL() {
+  if (!validateInputs()) {
+    showTemporaryMessage('Please fix errors before generating URL', 'error');
+    return;
+  }
+  
+  try {
+    const cardData = {
+      frontMessage: document.getElementById('frontInput').value,
+      imageUrl: document.getElementById('imageUrl').value.trim() || 'https://i.imgur.com/JqYeYn7.jpg',
+      backTitle: document.getElementById('backTitle').value,
+      backMessage: document.getElementById('backInput').value,
+      instagram: document.getElementById('instagram').value.trim(),
+      facebook: document.getElementById('facebook').value.trim(),
+      twitter: document.getElementById('twitter').value.trim(),
+      youtube: document.getElementById('youtube').value.trim(),
+      selectedEmojis: selectedEmojis,
+      timestamp: Date.now(),
+      version: '1.0'
+    };
+    
+    // Encode data to base64
+    const jsonString = JSON.stringify(cardData);
+    const encodedData = btoa(encodeURIComponent(jsonString));
+    
+    // Create shareable URL
+    const baseUrl = window.location.origin + window.location.pathname;
+    const shareUrl = `${baseUrl}?card=${encodedData}`;
+    
+    // Display the URL
+    const urlInput = document.getElementById('shareableUrl');
+    const urlContainer = document.getElementById('generatedUrlContainer');
+    
+    urlInput.value = shareUrl;
+    urlContainer.style.display = 'block';
+    
+    // Scroll to URL section
+    urlContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    showTemporaryMessage('Shareable URL generated!', 'success');
+  } catch (error) {
+    console.error('Error generating URL:', error);
+    showTemporaryMessage('Error generating URL', 'error');
+  }
+}
+
+// Copy share URL to clipboard
+function copyShareUrl() {
+  const urlInput = document.getElementById('shareableUrl');
+  
+  if (!urlInput.value) {
+    showTemporaryMessage('No URL to copy', 'error');
+    return;
+  }
+  
+  urlInput.select();
+  urlInput.setSelectionRange(0, 99999);
+  
+  navigator.clipboard.writeText(urlInput.value).then(() => {
+    showTemporaryMessage('URL copied to clipboard!', 'success');
+  }).catch(err => {
+    console.error('Copy failed:', err);
+    
+    // Fallback for older browsers
+    try {
+      document.execCommand('copy');
+      showTemporaryMessage('URL copied to clipboard!', 'success');
+    } catch (e) {
+      showTemporaryMessage('Failed to copy URL', 'error');
+    }
+  });
+}
+
+// Test share URL
+function testShareUrl() {
+  const url = document.getElementById('shareableUrl').value;
+  if (url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+}
+
+// Load card from URL parameter
+function loadCardFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const cardDataParam = urlParams.get('card');
+  
+  if (cardDataParam) {
+    try {
+      // Decode base64 and parse JSON
+      const decodedString = decodeURIComponent(atob(cardDataParam));
+      const cardData = JSON.parse(decodedString);
+      
+      // Update form inputs
+      if (cardData.frontMessage) document.getElementById('frontInput').value = cardData.frontMessage;
+      if (cardData.imageUrl) document.getElementById('imageUrl').value = cardData.imageUrl;
+      if (cardData.backTitle) document.getElementById('backTitle').value = cardData.backTitle;
+      if (cardData.backMessage) document.getElementById('backInput').value = cardData.backMessage;
+      if (cardData.instagram) document.getElementById('instagram').value = cardData.instagram;
+      if (cardData.facebook) document.getElementById('facebook').value = cardData.facebook;
+      if (cardData.twitter) document.getElementById('twitter').value = cardData.twitter;
+      if (cardData.youtube) document.getElementById('youtube').value = cardData.youtube;
+      
+      // Update emojis
+      if (cardData.selectedEmojis && Array.isArray(cardData.selectedEmojis)) {
+        selectedEmojis = cardData.selectedEmojis;
+        updateSelectedEmojisDisplay();
+        
+        // Update emoji options selection state
+        document.querySelectorAll('.emoji-option').forEach(option => {
+          const emoji = option.dataset.emoji;
+          if (selectedEmojis.includes(emoji)) {
+            option.classList.add('selected');
+          } else {
+            option.classList.remove('selected');
+          }
+        });
+      }
+      
+      // Update card display
+      updateCard();
+      
+      // Remove URL parameter to prevent reloading
+      if (history.replaceState) {
+        const newUrl = window.location.pathname;
+        history.replaceState(null, '', newUrl);
+      }
+      
+      showTemporaryMessage('Card loaded from URL!', 'success');
+    } catch (e) {
+      console.error('Error loading card from URL:', e);
+      showTemporaryMessage('Error loading card from URL', 'error');
+    }
+  }
+}
