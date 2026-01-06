@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report & Feedback System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- Floating Action Button -->
+<button class="report-aa-fab" id="report-aa-fab">
+  <span class="report-aa-fab-icon">💡</span>
+</button>
+
+<!-- Notification -->
+<div class="report-aa-notification" id="report-aa-notification">
+  <span class="report-aa-notification-icon">✨</span>
+  <span>Got brilliant ideas or facing issues? Share your feedback!</span>
+</div>
+
+<!-- Chat Modal -->
+<div class="report-aa-modal" id="report-aa-modal">
+  <div class="report-aa-color-flow"></div>
+  
+  <div class="report-aa-modal-content">
+    <div class="report-aa-header">
+      <h3><span>✨</span> Share Your Amazing Ideas</h3>
+      <button class="report-aa-close" id="report-aa-close">×</button>
+    </div>
+    
+    <div class="report-aa-body">
+      <!-- Loading State -->
+      <div class="report-aa-loading" id="report-aa-loading">
+        <div class="report-aa-spinner"></div>
+        <p style="color: rgba(255, 255, 255, 0.8); font-size: 16px;">Loading...</p>
+      </div>
+      
+      <!-- Form Container -->
+      <div id="report-aa-form-container">
+        <div style="
+          background: rgba(255, 255, 255, 0.05); 
+          padding: 30px; 
+          border-radius: 20px; 
+          margin-bottom: 35px; 
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+        ">
+          <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 18px; line-height: 1.6;">
+            <strong style="background: linear-gradient(135deg, #667eea, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🎯 Have a brilliant idea?</strong><br>
+            Share your thoughts, report bugs, or suggest amazing new features.
+          </p>
+          <p style="color: rgba(255, 255, 255, 0.7); font-size: 15px; line-height: 1.5;">
+            <strong>📞 Want us to contact you?</strong><br>
+            Just include your email or phone number in the message below.
+          </p>
+        </div>
+        
+        <div class="report-aa-textarea-wrapper">
+          <textarea 
+            class="report-aa-textarea" 
+            id="report-aa-message" 
+            placeholder="💭 Type your brilliant ideas, feedback, or suggestions here..."
+            rows="7"></textarea>
+        </div>
+        
+        <input 
+          class="report-aa-input" 
+          type="text" 
+          id="report-aa-screenshot" 
+          placeholder="🖼️ Optional: Paste screenshot URL">
+        
+        <button 
+          class="report-aa-submit-btn" 
+          id="report-aa-submit-btn">
+          <span id="report-aa-submit-text">🚀 Submit Feedback</span>
+        </button>
+        
+        <div class="report-aa-info" id="report-aa-info">
+          <div id="report-aa-count-display">Loading...</div>
+          <div class="report-aa-info-progress">
+            <div class="report-aa-info-progress-bar" id="report-aa-progress-bar"></div>
+          </div>
+          <div id="report-aa-limit-text" style="font-size: 14px; opacity: 0.7;"></div>
+        </div>
+      </div>
+      
+      <!-- Success Message -->
+      <div class="report-aa-success" id="report-aa-success">
+        <div class="report-aa-success-icon">✅</div>
+        <h3>Thank You! 🎉</h3>
+        <p>Your feedback has been submitted successfully!</p>
+        <p>If you included contact details, we'll connect with you soon.</p>
+        <p style="margin-top: 25px; font-size: 15px; opacity: 0.8;">
+          <em>✨ This message will close automatically...</em>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Worker URL
+const REPORT_AA_WORKER_URL = 'https://report-aa.kumar8948rahul.workers.dev';
+
+// Local Storage Config (5 per day limit)
+const REPORT_AA_CONFIG = {
+  maxPerDay: 5,
+  storageKey: "report_aa_daily_submissions",
+  dateKey: "report_aa_last_submission_date",
+  notificationDelay: 3000
+};
+
+// DOM Elements
+const fab = document.getElementById('report-aa-fab');
+const notification = document.getElementById('report-aa-notification');
+const modal = document.getElementById('report-aa-modal');
+const closeBtn = document.getElementById('report-aa-close');
+const submitBtn = document.getElementById('report-aa-submit-btn');
+const submitText = document.getElementById('report-aa-submit-text');
+const messageInput = document.getElementById('report-aa-message');
+const screenshotInput = document.getElementById('report-aa-screenshot');
+const countDisplay = document.getElementById('report-aa-count-display');
+const progressBar = document.getElementById('report-aa-progress-bar');
+const limitText = document.getElementById('report-aa-limit-text');
+const formContainer = document.getElementById('report-aa-form-container');
+const successMsg = document.getElementById('report-aa-success');
+const loadingDiv = document.getElementById('report-aa-loading');
+
+// Local Storage Functions
+function getToday() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function getSubmissionsCount() {
+  const today = getToday();
+  const lastDate = localStorage.getItem(REPORT_AA_CONFIG.dateKey);
+  const storedCount = localStorage.getItem(REPORT_AA_CONFIG.storageKey);
+  
+  // Reset if new day
+  if (lastDate !== today) {
+    localStorage.setItem(REPORT_AA_CONFIG.dateKey, today);
+    localStorage.setItem(REPORT_AA_CONFIG.storageKey, '0');
+    return 0;
+  }
+  
+  return parseInt(storedCount || '0', 10);
+}
+
+function incrementSubmissionCount() {
+  const currentCount = getSubmissionsCount();
+  localStorage.setItem(REPORT_AA_CONFIG.storageKey, (currentCount + 1).toString());
+  return currentCount + 1;
+}
+
+function updateUIWithLocalLimit() {
+  const currentCount = getSubmissionsCount();
+  const remaining = Math.max(0, REPORT_AA_CONFIG.maxPerDay - currentCount);
+  const percentage = (currentCount / REPORT_AA_CONFIG.maxPerDay) * 100;
+  
+  // Update progress bar
+  progressBar.style.width = `${Math.min(percentage, 100)}%`;
+  
+  // Update color based on usage
+  if (currentCount >= REPORT_AA_CONFIG.maxPerDay) {
+    progressBar.style.background = 'linear-gradient(90deg, #ff6b6b, #ff4757)';
+    countDisplay.innerHTML = `
+      <span style="color: #ff6b6b;">⛔ Daily Limit Reached</span>
+      <div style="font-size: 13px; opacity: 0.7;">Come back tomorrow!</div>
+    `;
+    limitText.textContent = `You've submitted ${currentCount} feedbacks today`;
+    submitBtn.disabled = true;
+    submitText.textContent = 'Daily Limit Reached';
+  } else {
+    progressBar.style.background = currentCount >= 3 
+      ? 'linear-gradient(90deg, #f59e0b, #ffa502)'
+      : 'linear-gradient(90deg, #60c994, #2ed573)';
+    
+    countDisplay.innerHTML = `
+      <span style="color: ${currentCount >= 3 ? '#f59e0b' : '#60c994'}">
+        📊 ${remaining} of ${REPORT_AA_CONFIG.maxPerDay} submissions remaining
+      </span>
+    `;
+    limitText.textContent = `You've submitted ${currentCount} feedback${currentCount !== 1 ? 's' : ''} today`;
+    submitBtn.disabled = false;
+    submitText.textContent = currentCount >= 3 ? '🚀 Submit (Careful!)' : '🚀 Submit Feedback';
+  }
+}
+
+// Show notification after delay
+function showNotification() {
+  if (modal.style.display !== 'flex') {
+    notification.style.display = 'flex';
+    
+    // Auto hide after 8 seconds
+    setTimeout(() => {
+      if (notification.style.display === 'flex') {
+        notification.style.display = 'none';
+      }
+    }, 8000);
+  }
+}
+
+// Initialize notification
+setTimeout(showNotification, REPORT_AA_CONFIG.notificationDelay);
+
+// Event Listeners
+fab.addEventListener('click', () => {
+  modal.style.display = 'flex';
+  notification.style.display = 'none';
+  updateUIWithLocalLimit();
+});
+
+closeBtn.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+notification.addEventListener('click', () => {
+  modal.style.display = 'flex';
+  notification.style.display = 'none';
+  updateUIWithLocalLimit();
+});
+
+// Close modal when clicking outside (desktop only)
+if (window.innerWidth >= 769) {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal || e.target.classList.contains('report-aa-color-flow')) {
+      modal.style.display = 'none';
+    }
+  });
+}
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.style.display === 'flex') {
+    modal.style.display = 'none';
+  }
+});
+
+// Submit Function - FIXED VERSION
+async function submitReportAa() {
+  const message = messageInput.value.trim();
+  const screenshot = screenshotInput.value.trim();
+
+  if (!message) {
+    alert('📝 Please write your feedback or describe the problem.');
+    messageInput.focus();
+    return;
+  }
+
+  // Check local limit first
+  const currentCount = getSubmissionsCount();
+  if (currentCount >= REPORT_AA_CONFIG.maxPerDay) {
+    alert(`⛔ Daily limit reached! You can submit ${REPORT_AA_CONFIG.maxPerDay} feedbacks per day.`);
+    return;
+  }
+
+  // Validate URL if provided
+  if (screenshot && !isValidUrl(screenshot)) {
+    alert('🔗 Please enter a valid URL for the screenshot.');
+    screenshotInput.focus();
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitText.textContent = 'Sending... ✨';
+
+  const payload = {
+    message,
+    screenshotUrl: screenshot || null,
+    localLimitUsed: currentCount + 1,
+    timestamp: new Date().toISOString()
+  };
+
+  try {
+    // DEBUG: Log the request
+    console.log('Sending to worker:', REPORT_AA_WORKER_URL);
+    console.log('Payload:', payload);
+
+    const res = await fetch(REPORT_AA_WORKER_URL, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      mode: 'cors',
+      body: JSON.stringify(payload)
+    });
+
+    // DEBUG: Check response
+    console.log('Response status:', res.status);
+    console.log('Response headers:', [...res.headers.entries()]);
+    
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    
+    const data = await res.json();
+    console.log('Response data:', data);
+
+    if (!data.success) {
+      throw new Error(data.error || 'Submission failed');
+    }
+
+    // Increment local count
+    incrementSubmissionCount();
+    
+    // Show success message with submission details
+    formContainer.style.display = 'none';
+    successMsg.style.display = 'block';
+    
+    // Update success message with submission ID if available
+    if (data.submissionId) {
+      const successDetails = document.createElement('div');
+      successDetails.style.marginTop = '15px';
+      successDetails.style.padding = '10px';
+      successDetails.style.background = 'rgba(255,255,255,0.1)';
+      successDetails.style.borderRadius = '8px';
+      successDetails.style.fontSize = '14px';
+      successDetails.innerHTML = `
+        <strong>Submission ID:</strong> ${data.submissionId}<br>
+        <strong>Total submissions today:</strong> ${data.stats?.todayTotal || 'N/A'}
+      `;
+      successMsg.appendChild(successDetails);
+    }
+    
+    // Auto close after 4 seconds
+    setTimeout(() => {
+      modal.style.display = 'none';
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+        formContainer.style.display = 'block';
+        
+        // Remove any added success details
+        const addedDetails = successMsg.querySelector('div[style*="background: rgba"]');
+        if (addedDetails) {
+          addedDetails.remove();
+        }
+        
+        // Reset form
+        messageInput.value = '';
+        screenshotInput.value = '';
+        submitBtn.disabled = false;
+        submitText.textContent = '🚀 Submit Feedback';
+        
+        // Update UI
+        updateUIWithLocalLimit();
+      }, 300);
+    }, 4000);
+
+  } catch (error) {
+    console.error('Full error details:', error);
+    
+    // More detailed error message
+    let errorMsg = 'Failed to submit feedback. ';
+    if (error.message.includes('Failed to fetch')) {
+      errorMsg += 'Please check your internet connection and try again.';
+    } else if (error.message.includes('CORS')) {
+      errorMsg += 'CORS error. Make sure the worker allows localhost.';
+    } else {
+      errorMsg += error.message;
+    }
+    
+    alert(`❌ Error: ${errorMsg}`);
+    submitBtn.disabled = false;
+    submitText.textContent = '🚀 Submit Feedback';
+    updateUIWithLocalLimit();
+  }
+}
+
+// URL validation helper
+function isValidUrl(string) {
+  try {
+    // Allow relative URLs and data URLs for screenshots
+    if (string.startsWith('data:image/')) return true;
+    if (string.startsWith('/')) return true;
+    
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+// Initialize
+submitBtn.addEventListener('click', submitReportAa);
+updateUIWithLocalLimit();
+
+// Allow Enter key in textarea but not submit
+messageInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+  }
+});
+
+// Auto-resize textarea
+messageInput.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
+});
+
+// Hide notification when scrolling
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  if (notification.style.display === 'flex') {
+    notification.style.opacity = '0.5';
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      notification.style.opacity = '1';
+    }, 200);
+  }
+});
+
+// Add confetti effect on success
+function createConfetti() {
+  const confettiCount = 50;
+  const colors = ['#667eea', '#ff6b6b', '#60c994', '#f59e0b', '#8b5cf6'];
+  
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement('div');
+    confetti.style.position = 'fixed';
+    confetti.style.width = '10px';
+    confetti.style.height = '10px';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.borderRadius = '50%';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.top = '-20px';
+    confetti.style.zIndex = '10002';
+    confetti.style.pointerEvents = 'none';
+    confetti.style.animation = `confetti-fall ${1 + Math.random() * 2}s linear forwards`;
+    
+    document.body.appendChild(confetti);
+    
+    setTimeout(() => confetti.remove(), 2000);
+  }
+}
+
+// Add confetti animation to styles
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
+
+// Test worker connection on page load
+async function testWorkerConnection() {
+  try {
+    const res = await fetch(REPORT_AA_WORKER_URL, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
+    });
+    
+    if (res.ok) {
+      const data = await res.json();
+      console.log('Worker connection successful:', data);
+      
+      // Update info display if server has different limits
+      if (data.clientLimit && data.clientLimit !== REPORT_AA_CONFIG.maxPerDay) {
+        console.log(`Server suggests ${data.clientLimit} submissions per day`);
+      }
+    } else {
+      console.warn('Worker GET request failed:', res.status);
+    }
+  } catch (error) {
+    console.error('Worker connection test failed:', error);
+  }
+}
+
+// Run connection test on load
+window.addEventListener('load', () => {
+  testWorkerConnection();
+  updateUIWithLocalLimit();
+});
+
+// Also update UI when tab becomes visible
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    updateUIWithLocalLimit();
+  }
+});
+
+// Make submit function globally available
+window.submitReportAa = submitReportAa;
+</script>
+
+</body>
+</html>
